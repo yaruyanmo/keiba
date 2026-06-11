@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keiba Hub | 競馬結果予想＆AIシミュレーター</title>
+  <meta name="description" content="JRA（中央競馬）＆地方競馬全24会場対応のAI予想シミュレーター。リアルタイム天気連動、コピペ出馬表生成、仮想ベッティング機能搭載。">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header Section -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="logo-section">
+        <div class="logo-icon">駿</div>
+        <div>
+          <span class="logo-text">KEIBA HUB</span>
+          <div class="logo-sub">JRA & NAR AI Prediction Engine</div>
+        </div>
+      </a>
+      
+      <nav>
+        <button class="nav-tab active" data-tab="dashboard">
+          <i data-lucide="layout-dashboard"></i> 結果予想
+        </button>
+        <button class="nav-tab" data-tab="betting">
+          <i data-lucide="ticket"></i> 仮想ベッティング
+        </button>
+        <button class="nav-tab" data-tab="database">
+          <i data-lucide="database"></i> データベース
+        </button>
+        <button class="nav-tab" data-tab="parser">
+          <i data-lucide="clipboard-paste"></i> コピペ更新
+        </button>
+        <button class="nav-tab" data-tab="guide">
+          <i data-lucide="help-circle"></i> ガイド
+        </button>
+      </nav>
+
+      <!-- User Balance Widget -->
+      <div class="user-balance-widget">
+        <span class="balance-title">仮想所持金</span>
+        <span class="balance-amount" id="user-balance">
+          ¥<span id="balance-val">10,000</span>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <!-- 1. DASHBOARD TAB (RESULTS PREDICTION) -->
+    <section id="dashboard" class="tab-content active">
+      <!-- Live Weather Trackers for all 24 venues (overflow scrolling) -->
+      <div class="glass-panel margin-bottom">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <i data-lucide="cloud-sun"></i> 全国競馬場 リアルタイム天気トラッカー
+          </h2>
+          <span class="text-muted" style="font-size: 0.8rem;">※競馬場を選択すると、その会場のお天気と馬場状態（良〜不良）が自動連動します</span>
+        </div>
+        <div class="panel-body" style="padding: 1rem;">
+          <div style="overflow-x: auto; white-space: nowrap; padding-bottom: 0.5rem;" id="weather-scroll-container">
+            <div class="weather-widget" id="weather-list" style="display: flex; gap: 0.75rem; width: max-content;">
+              <!-- Dynamically populated via app.js -->
+              <div class="text-center" style="padding: 1rem; width: 100%;">
+                <span class="loading-spinner"></span>
+                <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-secondary);">全24箇所のお天気データを取得中...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Race Selector Widget Panel -->
+      <div class="glass-panel margin-bottom" style="border-color: rgba(0, 230, 118, 0.25);">
+        <div class="panel-header" style="background: rgba(0, 230, 118, 0.02); padding: 0.75rem 1.25rem;">
+          <h3 style="font-size: 1rem; font-weight: 700; color: var(--color-emerald); display: flex; align-items: center; gap: 0.5rem;">
+            <i data-lucide="sliders"></i> レース・会場選択＆条件カスタム
+          </h3>
+          <span class="text-muted" style="font-size: 0.75rem;">お好みのレースを選択するか、条件を自由にカスタマイズしてAI予想を実行できます</span>
+        </div>
+        <div class="panel-body" style="padding: 1rem 1.25rem;">
+          <div class="race-selector-layout">
+            <div class="selector-group">
+              <label>主催元</label>
+              <div class="host-toggle-wrapper">
+                <button class="toggle-btn active" id="host-jra-btn">中央競馬 (JRA)</button>
+                <button class="toggle-btn" id="host-nar-btn">地方競馬 (NAR)</button>
+              </div>
+            </div>
+            
+            <div class="selector-group">
+              <label for="race-venue-select">開催競馬場</label>
+              <select id="race-venue-select" class="select-custom">
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+            
+            <div class="selector-group">
+              <label for="race-number-select">レース番号</label>
+              <select id="race-number-select" class="select-custom">
+                <option value="1">1R (新馬・未勝利)</option>
+                <option value="2">2R (未勝利)</option>
+                <option value="3">3R (未勝利)</option>
+                <option value="4">4R (1勝クラス)</option>
+                <option value="5">5R (1勝クラス)</option>
+                <option value="6">6R (2勝クラス)</option>
+                <option value="7">7R (2勝クラス)</option>
+                <option value="8">8R (3勝クラス)</option>
+                <option value="9">9R (特別戦)</option>
+                <option value="10">10R (準メイン)</option>
+                <option value="11" selected>11R (メインレース)</option>
+                <option value="12">12R (最終レース)</option>
+              </select>
+            </div>
+
+            <div class="selector-group" style="justify-content: flex-end;">
+              <button class="btn-secondary" id="toggle-custom-drawer-btn" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.25rem; font-size: 0.85rem;">
+                <i data-lucide="settings"></i> コース詳細設定
+              </button>
+            </div>
+          </div>
+
+          <!-- Hidden Drawer for Course Detail Settings -->
+          <div id="course-custom-drawer" style="display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border-glass);">
+            <div class="course-custom-grid">
+              <div class="selector-group">
+                <label for="custom-track-type">トラック種別</label>
+                <select id="custom-track-type" class="select-custom">
+                  <option value="芝">芝 (Turf)</option>
+                  <option value="ダート">ダート (Dirt)</option>
+                </select>
+              </div>
+              <div class="selector-group">
+                <label for="custom-direction">回り方向</label>
+                <select id="custom-direction" class="select-custom">
+                  <option value="右">右回り</option>
+                  <option value="左">左回り</option>
+                  <option value="直線">直線</option>
+                </select>
+              </div>
+              <div class="selector-group">
+                <label for="custom-distance">レース距離 (m)</label>
+                <input type="number" id="custom-distance" class="input-number-custom" value="2000" min="800" max="3600" step="100">
+              </div>
+              <div class="selector-group">
+                <label for="custom-grade">レース格式</label>
+                <select id="custom-grade" class="select-custom">
+                  <option value="G1">G1 / 重賞競走</option>
+                  <option value="OP">オープン特別 / リステッド</option>
+                  <option value="一般">一般条件戦</option>
+                </select>
+              </div>
+            </div>
+            <div class="margin-top" style="display: flex; justify-content: flex-end; gap: 1rem;">
+              <button class="btn-premium" id="apply-custom-race-btn" style="font-size: 0.85rem; padding: 0.5rem 1.25rem;">
+                <i data-lucide="check"></i> 独自のカスタム条件で馬柱を再生成
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Prediction Card -->
+      <div class="dashboard-grid">
+        <!-- Left Column: Racecard and predictions -->
+        <div class="glass-panel">
+          <div class="panel-header">
+            <div class="race-title-area">
+              <span class="race-grade-badge" id="race-grade">G1</span>
+              <div>
+                <h2 class="race-name-main" id="race-name">有馬記念</h2>
+                <div class="race-details-text" id="race-meta">中山 11R | 芝 右回り 2500m</div>
+              </div>
+            </div>
+            <div class="text-gold" id="current-track-condition-badge">芝: 良</div>
+          </div>
+          
+          <div class="panel-body" style="padding: 1rem 0 0 0;">
+            <div class="umabashira-table-container">
+              <table class="umabashira-table">
+                <thead>
+                  <tr>
+                    <th style="width: 60px;">枠番</th>
+                    <th style="width: 60px;">馬番</th>
+                    <th style="text-align: left; padding-left: 1.5rem;">競走馬名 / 血統</th>
+                    <th style="width: 70px;">AI予想</th>
+                    <th style="width: 70px;">指数</th>
+                    <th style="width: 90px;">単勝オッズ</th>
+                    <th style="width: 100px;">騎手 / 斤量</th>
+                    <th style="width: 90px;">詳細</th>
+                  </tr>
+                </thead>
+                <tbody id="racecard-body">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Quick Stats or General AI Info -->
+        <div class="glass-panel">
+          <div class="panel-header">
+            <h2 class="panel-title">
+              <i data-lucide="brain"></i> AI予想アルゴリズム解説
+            </h2>
+          </div>
+          <div class="panel-body" style="display: flex; flex-direction: column; gap: 1.25rem;">
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">
+              本サイトのAI結果予想は、以下の**5つの固定因子**を数学的モデルに基づいて集計し、各馬の能力指数および本命（◎）マークを算出しています。
+            </p>
+            
+            <div class="factors-progress-grid">
+              <div class="factor-progress-item">
+                <span class="factor-name">スピード指数</span>
+                <div class="factor-bar-bg"><div class="factor-bar-fill" style="width: 30%; background: #ffd600;"></div></div>
+                <span class="factor-value">30%</span>
+              </div>
+              <div class="factor-progress-item">
+                <span class="factor-name">近走成績</span>
+                <div class="factor-bar-bg"><div class="factor-bar-fill" style="width: 25%; background: #00e676;"></div></div>
+                <span class="factor-value">25%</span>
+              </div>
+              <div class="factor-progress-item">
+                <span class="factor-name">会場適性</span>
+                <div class="factor-bar-bg"><div class="factor-bar-fill" style="width: 20%; background: #2979ff;"></div></div>
+                <span class="factor-value">20%</span>
+              </div>
+              <div class="factor-progress-item">
+                <span class="factor-name">騎手適性</span>
+                <div class="factor-bar-bg"><div class="factor-bar-fill" style="width: 15%; background: #ea80fc;"></div></div>
+                <span class="factor-value">15%</span>
+              </div>
+              <div class="factor-progress-item">
+                <span class="factor-name">馬場・気象適性</span>
+                <div class="factor-bar-bg"><div class="factor-bar-fill" style="width: 10%; background: #ff9100;"></div></div>
+                <span class="factor-value">10%</span>
+              </div>
+            </div>
+
+            <div class="info-alert">
+              <strong>💡 会場・天気の連動：</strong><br>
+              現在の天気や、レース場の回り方向（右/左）に応じて「会場適性」「馬場・気象適性」が変動し、最終指数がリアルタイムに補正されます。
+            </div>
+            
+            <button class="btn-premium" style="width: 100%; justify-content: center;" onclick="window.app.switchToTab('betting')">
+              <i data-lucide="ticket"></i> このレースでベッティングする
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Horse Detail Inspection Area -->
+      <div class="glass-panel" id="horse-detail-panel" style="display: none;">
+        <div class="panel-header" style="background: rgba(212, 175, 55, 0.03);">
+          <h2 class="panel-title" id="detail-header-title">
+            <i data-lucide="search"></i> 競走馬分析：[馬名]
+          </h2>
+          <button class="btn-secondary" style="padding: 0.3rem 0.8rem; font-size: 0.75rem;" onclick="document.getElementById('horse-detail-panel').style.display = 'none';">
+            閉じる
+          </button>
+        </div>
+        <div class="panel-body">
+          <div class="prediction-summary-container">
+            <!-- 1. General Profile -->
+            <div class="details-column">
+              <div class="details-list-card">
+                <div class="details-list-header">基本ステータス</div>
+                <div class="stat-item"><span class="stat-label">性齢</span><span class="stat-value" id="detail-age">牡4</span></div>
+                <div class="stat-item"><span class="stat-label">斤量</span><span class="stat-value" id="detail-weight">58kg</span></div>
+                <div class="stat-item"><span class="stat-label">脚質</span><span class="stat-value" id="detail-runstyle">差し</span></div>
+                <div class="stat-item"><span class="stat-label">調教師</span><span class="stat-value" id="detail-trainer">木村 (美浦)</span></div>
+                <div class="stat-item"><span class="stat-label">主戦騎手</span><span class="stat-value" id="detail-jockey">C.ルメール</span></div>
+              </div>
+              
+              <div class="details-list-card">
+                <div class="details-list-header">会場適性スタッツ</div>
+                <div class="stat-item"><span class="stat-label">右回り実績</span><span class="stat-value" id="detail-clockwise-pct">80%</span></div>
+                <div class="stat-item"><span class="stat-label">左回り実績</span><span class="stat-value" id="detail-counter-pct">100%</span></div>
+                <div class="stat-item"><span class="stat-label">本会場実績</span><span class="stat-value" id="detail-venue-pct">60%</span></div>
+              </div>
+            </div>
+
+            <!-- 2. AI Rating Breakdown -->
+            <div class="details-column">
+              <div class="details-list-card" style="height: 100%;">
+                <div class="details-list-header">AI予想スコア内訳 (5大因子評価)</div>
+                <div class="factors-progress-grid" style="margin-bottom: 1rem;" id="detail-factors-breakdown">
+                  <!-- JS dynamically fills -->
+                </div>
+                <div class="info-alert" style="margin-bottom: 0;">
+                  <strong>AI分析レポート:</strong><br>
+                  <span id="detail-ai-report">この馬は高速馬場を得意としており、本日の良馬場発表は好材料です。また近走成績が極めて安定しており、今回のコース距離適性も高いため、大崩れは考えにくい本命馬です。</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Radar Chart Visualizer -->
+            <div class="details-column">
+              <div class="details-list-card" style="height: 100%; display: flex; flex-direction: column;">
+                <div class="details-list-header" style="text-align: center;">能力値チャート</div>
+                <div class="radar-chart-container">
+                  <canvas id="horseRadarChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Past Races (近5走) -->
+          <div class="margin-top">
+            <h4 style="font-size: 1rem; font-weight: 700; color: var(--color-gold); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+              <i data-lucide="history"></i> 直近5走の戦績 (過去成績)
+            </h4>
+            <div class="past-races-grid" id="detail-past-races">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. VIRTUAL BETTING TAB -->
+    <section id="betting" class="tab-content">
+      <div class="betting-layout">
+        <!-- Left: Race Horse Selector & Live Simulation -->
+        <div class="details-column">
+          <!-- Simulation visual track -->
+          <div class="sim-track-wrapper">
+            <div class="sim-track-header">
+              <h3 style="font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; color: var(--color-emerald);">
+                <i data-lucide="play-circle"></i> 仮想レースシミュレーター
+              </h3>
+              <div id="sim-status" class="text-gold" style="font-size: 0.85rem; font-weight: 700;">馬券購入受付中</div>
+            </div>
+            
+            <div class="sim-race-runner-container" id="sim-race-track">
+              <!-- Finish Line -->
+              <div class="finish-line"></div>
+              <!-- Lanes populated dynamically -->
+            </div>
+            
+            <div class="margin-top flex-space">
+              <button class="btn-premium" id="start-race-btn" disabled>
+                <i data-lucide="play"></i> 模擬レーススタート！
+              </button>
+              <button class="btn-secondary" id="reset-race-btn" style="display: none;">
+                リセット
+              </button>
+              <span class="text-muted" style="font-size: 0.8rem;">※馬券購入後にレースを開始できます。</span>
+            </div>
+          </div>
+
+          <!-- Selection List -->
+          <div class="glass-panel">
+            <div class="panel-header">
+              <h2 class="panel-title">
+                <i data-lucide="list"></i> 賭ける馬を選択してください
+              </h2>
+            </div>
+            <div class="panel-body" style="padding: 0.5rem 0;" id="bet-selection-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Betting Slips & Ticket Creator -->
+        <div class="details-column">
+          <div class="glass-panel">
+            <div class="panel-header">
+              <h2 class="panel-title">
+                <i data-lucide="wallet"></i> 馬券購入スリップ
+              </h2>
+            </div>
+            <div class="panel-body">
+              <div class="bet-ticket-creator">
+                <div class="flex-space">
+                  <span style="font-size: 0.9rem; color: var(--text-secondary);">対象レース:</span>
+                  <span id="bet-race-title" style="font-weight: 700;">有馬記念</span>
+                </div>
+                
+                <div class="flex-space" style="margin-bottom: 0.5rem;">
+                  <span style="font-size: 0.9rem; color: var(--text-secondary);">選択馬:</span>
+                  <span id="bet-selected-horse" class="text-gold" style="font-weight: 800;">(選択してください)</span>
+                </div>
+
+                <div>
+                  <label style="font-size: 0.85rem; color: var(--text-secondary); display: block; margin-bottom: 0.4rem;">式別 (賭け方):</label>
+                  <div class="betting-types-grid">
+                    <button class="bet-type-btn active" data-type="win">単勝</button>
+                    <button class="bet-type-btn" data-type="place">複勝</button>
+                  </div>
+                  <p id="bet-type-description" style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+                    単勝：選択した馬が 1着 になれば的中。
+                  </p>
+                </div>
+
+                <div>
+                  <label style="font-size: 0.85rem; color: var(--text-secondary); display: block; margin-bottom: 0.4rem;">賭け金 (円):</label>
+                  <input type="number" id="bet-amount" class="input-number-custom" value="1000" min="100" step="100">
+                  <div style="display: flex; gap: 0.25rem; margin-top: 0.4rem;">
+                    <button class="btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; flex-grow: 1;" onclick="document.getElementById('bet-amount').value = 500">500</button>
+                    <button class="btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; flex-grow: 1;" onclick="document.getElementById('bet-amount').value = 1000">1000</button>
+                    <button class="btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; flex-grow: 1;" onclick="document.getElementById('bet-amount').value = 3000">3000</button>
+                    <button class="btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem; flex-grow: 1;" onclick="document.getElementById('bet-amount').value = 5000">5000</button>
+                  </div>
+                </div>
+
+                <div class="info-alert" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
+                  <div class="flex-space">
+                    <span>見込みオッズ:</span>
+                    <span id="bet-potential-odds" style="font-weight: 700; color: #fff;">-</span>
+                  </div>
+                  <div class="flex-space" style="margin-top: 0.25rem;">
+                    <span>払戻見込み額:</span>
+                    <span id="bet-potential-payout" class="text-gold" style="font-weight: 800; font-size: 1rem;">-</span>
+                  </div>
+                </div>
+
+                <button class="btn-premium" id="buy-ticket-btn" style="width: 100%; justify-content: center; height: 42px;">
+                  <i data-lucide="shopping-cart"></i> 馬券を購入する
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Tickets / Betting History -->
+          <div class="glass-panel">
+            <div class="panel-header">
+              <h2 class="panel-title">
+                <i data-lucide="history"></i> 購入履歴 ＆ 収支推移
+              </h2>
+            </div>
+            <div class="panel-body">
+              <div style="height: 180px; margin-bottom: 1.5rem;">
+                <canvas id="bettingTrendChart"></canvas>
+              </div>
+              <div id="betting-history-list" style="max-height: 200px; overflow-y: auto; font-size: 0.8rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                <p class="text-muted text-center" style="padding: 1rem;">まだ馬券の購入履歴はありません。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. DATABASE TAB -->
+    <section id="database" class="tab-content">
+      <div class="glass-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <i data-lucide="database"></i> 名馬 ＆ 騎手データベース検索
+          </h2>
+        </div>
+        <div class="panel-body">
+          <div class="search-controls">
+            <input type="text" id="db-search-input" class="input-text-custom" placeholder="競走馬名、脚質、騎手名で検索...">
+            <button class="btn-premium" id="db-search-btn">
+              <i data-lucide="search"></i> 検索
+            </button>
+          </div>
+          
+          <div class="db-grid" id="database-grid-container">
+            <!-- Dynamically populated via app.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. JRA / NAR PASTE PARSER TAB -->
+    <section id="parser" class="tab-content">
+      <div class="glass-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <i data-lucide="clipboard-paste"></i> 出馬表テキスト 貼り付けコピペ更新ツール
+          </h2>
+        </div>
+        <div class="panel-body">
+          <div class="info-alert">
+            <strong>使い方:</strong><br>
+            JRA公式サイト、地方競馬情報サイト（NAR）、またはNetkeiba等の出馬表ページから、テーブルテキストをコピーして、下の入力欄に貼り付けしてください。<br>
+            <strong>「枠番」「馬番」「馬名」「騎手」「斤量」「単勝オッズ」</strong>が自動的にパースされ、結果予想と仮想ベッティングの出馬表が瞬時に最新状態に更新されます！
+          </div>
+
+          <textarea id="jra-paste-area" class="textarea-custom" placeholder="例：
+1 1 サクラバクシンオー 牡4 58.0 坂井瑠星 4.5
+2 2 イクイノックス 牡4 58.0 ルメール 1.2
+...
+または、Netkeibaなどのコピペ出馬表テーブルテキスト。"></textarea>
+
+          <div class="flex-btn-group">
+            <button class="btn-premium" id="parse-submit-btn">
+              <i data-lucide="check-circle-2"></i> テキストを解析して出馬表を更新
+            </button>
+            <button class="btn-secondary" id="load-sample-arima-btn">
+              有馬記念 (中央G1・サンプル) をロード
+            </button>
+            <button class="btn-secondary" id="load-sample-derby-btn">
+              東京大賞典 (地方G1・サンプル) をロード
+            </button>
+          </div>
+
+          <div id="parse-status-msg" class="margin-top" style="display: none; padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600;">
+            <!-- Status messages populate here -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. GUIDE TAB -->
+    <section id="guide" class="tab-content">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+        
+        <div class="glass-panel help-guide-card">
+          <h3><i data-lucide="activity"></i> 脚質（きゃくしつ）とは？</h3>
+          <p>競走馬が得意とするレースでのポジショニングと走り方の分類です。</p>
+          <ul style="font-size: 0.85rem; color: var(--text-secondary); padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem;">
+            <li><strong>逃げ (逃げ)</strong>: レース開始直後から先頭に立ち、そのまま押し切りを図るスタイル。</li>
+            <li><strong>先行 (先行)</strong>: 2〜4番手の前寄りのポジションをキープし、直線で抜け出す安定型。</li>
+            <li><strong>差し (差し)</strong>: 馬群の中ほどで脚を溜め、直線で一気に先頭を差し切る瞬発力型。</li>
+            <li><strong>追い込み (追込)</strong>: 後方に待機し、最後の最後で爆発的な末脚にすべてを懸ける戦法。</li>
+          </ul>
+        </div>
+
+        <div class="glass-panel help-guide-card">
+          <h3><i data-lucide="brain"></i> AI予想の5つの固定パラメータ</h3>
+          <p>当サイトの予測モデルは以下の要素を固定比率で合成して本命等を判定します。</p>
+          <ul style="font-size: 0.85rem; color: var(--text-secondary); padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem;">
+            <li><strong>スピード指数 (30%)</strong>: 調教タイムや過去のレース走破時計から馬本来の純粋なスピード能力を弾き出します。</li>
+            <li><strong>近走成績 (25%)</strong>: 直近5走で何着だったか、何秒差で走ったかを数値化し、好調期とスランプを評価します。</li>
+            <li><strong>会場適性 (20%)</strong>: 競馬場（中山の急坂、東京の長い直線など）や右回り・左回りへの慣れを算出します。</li>
+            <li><strong>騎手適性 (15%)</strong>: 騎手の今季リーディング成績や、馬とのコンビ実績（継続騎乗は高評価）を分析。</li>
+            <li><strong>馬場・気象適性 (10%)</strong>: 開催地のお天気APIと連動し、良馬場/重馬場それぞれの適性をチェック。</li>
+          </ul>
+        </div>
+
+        <div class="glass-panel help-guide-card">
+          <h3><i data-lucide="ticket"></i> 馬券の種類とルール</h3>
+          <p>仮想ベッティングゲームで購入できる基本の馬券タイプです。</p>
+          <ul style="font-size: 0.85rem; color: var(--text-secondary); padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem;">
+            <li><strong>単勝 (Win)</strong>: 選んだ馬が「1着」に入れば的中。もっともシンプルでわかりやすい基本の馬券。</li>
+            <li><strong>複勝 (Place)</strong>: 選んだ馬が「3着以内（出走頭数により2着以内）」に入れば的中。配当は低めですが的中率は格段に高くなります。</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="text-center" style="margin-top: 3rem; padding: 2rem 0; border-top: 1px solid var(--border-glass); color: var(--text-muted); font-size: 0.8rem;">
+    <p>&copy; 2026 KEIBA HUB AI Prediction System. All rights reserved.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <!-- Chart.js for beautiful Radar and Line Charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Lucide icons for vector symbols -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Main Application Script -->
+  <script src="app.js"></script>
+</body>
+</html>
