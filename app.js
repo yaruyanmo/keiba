@@ -667,62 +667,49 @@
 
   // --- 9. WEATHER API ---
 
+  async function fetchSingleVenueWeather(key) {
+    const v = VENUES[key];
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout per venue
+    try {
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${v.lat}&longitude=${v.lon}&current_weather=true&hourly=precipitation&timezone=Asia%2FTokyo`;
+      const res = await fetch(url, { signal: controller.signal });
+      clearTimeout(timeoutId);
+      if (!res.ok) throw new Error('HTTP error');
+      const data = await res.json();
+
+      const current = data.current_weather;
+      const temp = Math.round(current.temperature);
+      const code = current.weathercode;
+
+      const hourlyPrecip = data.hourly.precipitation || [];
+      const recentRain = hourlyPrecip.slice(0, 24).reduce((sum, val) => sum + val, 0);
+
+      let condition = '良';
+      let badgeClass = 'badge-ryo';
+      if (recentRain > 15)       { condition = '不良'; badgeClass = 'badge-furyo'; }
+      else if (recentRain > 5)   { condition = '重';   badgeClass = 'badge-shige'; }
+      else if (recentRain > 0.5) { condition = '稍重'; badgeClass = 'badge-sayu'; }
+
+      let desc = '晴れ'; let icon = 'sun';
+      if (code >= 51 && code <= 67)  { desc = '小雨'; icon = 'cloud-rain'; }
+      else if (code >= 80 && code <= 82) { desc = '大雨'; icon = 'cloud-drizzle'; }
+      else if (code >= 71 && code <= 77) { desc = '雪';   icon = 'cloud-snow'; }
+      else if (code >= 1  && code <= 3)  { desc = '曇り'; icon = 'cloud'; }
+      else if (code >= 95 && code <= 99) { desc = '雷雨'; icon = 'cloud-lightning'; }
+
+      state.weatherData[key] = { temp: temp + '°C', desc, icon, condition, badgeClass };
+    } catch (err) {
+      clearTimeout(timeoutId);
+      // Fallback — don't block the UI
+      state.weatherData[key] = { temp: '--°C', desc: '取得失敗', icon: 'cloud', condition: '良', badgeClass: 'badge-ryo' };
+    }
+  }
+
   async function fetchLiveWeather() {
-    const promises = Object.keys(VENUES).map(async (key) => {
-      const v = VENUES[key];
-      try {
-        const url = `https://api.open-meteo.com/v1/forecast?latitude=${v.lat}&longitude=${v.lon}&current_weather=true&hourly=precipitation&timezone=Asia%2FTokyo`;
-        const res = await fetch(url);
-        if (!res.ok) throw new Error("HTTP error");
-        const data = await res.json();
-        
-        const current = data.current_weather;
-        const temp = Math.round(current.temperature);
-        const code = current.weathercode;
-        
-        const hourlyPrecip = data.hourly.precipitation;
-        const recentRain = hourlyPrecip.slice(0, 24).reduce((sum, val) => sum + val, 0);
-
-        let condition = "良";
-        let badgeClass = "badge-ryo";
-        if (recentRain > 15) {
-          condition = "不良";
-          badgeClass = "badge-furyo";
-        } else if (recentRain > 5) {
-          condition = "重";
-          badgeClass = "badge-shige";
-        } else if (recentRain > 0.5) {
-          condition = "稍重";
-          badgeClass = "badge-sayu";
-        }
-
-        let desc = "晴れ";
-        let icon = "sun";
-        if (code >= 51 && code <= 67) { desc = "小雨"; icon = "cloud-rain"; }
-        else if (code >= 80 && code <= 82) { desc = "大雨"; icon = "cloud-drizzle"; }
-        else if (code >= 71 && code <= 77) { desc = "雪"; icon = "cloud-snow"; }
-        else if (code >= 1 && code <= 3) { desc = "曇り"; icon = "cloud"; }
-        else if (code >= 95 && code <= 99) { desc = "雷雨"; icon = "cloud-lightning"; }
-
-        state.weatherData[key] = {
-          temp: temp + "°C",
-          desc: desc,
-          icon: icon,
-          condition: condition,
-          badgeClass: badgeClass
-        };
-      } catch (err) {
-        state.weatherData[key] = {
-          temp: "22°C",
-          desc: "晴れ",
-          icon: "sun",
-          condition: "良",
-          badgeClass: "badge-ryo"
-        };
-      }
-    });
-
-    await Promise.all(promises);
+    // Fetch all 24 venues in parallel; use allSettled so one failure never blocks the rest
+    const promises = Object.keys(VENUES).map(key => fetchSingleVenueWeather(key));
+    await Promise.allSettled(promises);
 
     const currentVenueWeather = state.weatherData[state.currentVenueKey];
     if (currentVenueWeather) {
@@ -1711,10 +1698,11 @@
       document.getElementById('course-custom-drawer').style.display = 'none';
     });
 
-    // Initial load
+    // Initial load — render the racecard immediately, then update when weather arrives
     renderVenueSelectDropdowns();
     generateRace('阪神', '11'); // Default loads Takarazuka Kinen 2026!
-    fetchLiveWeather();
+    renderAll(); // Show racecard right away, don't wait for weather
+    fetchLiveWeather(); // Fetch weather async and update when ready
 
     // Betting Listeners
     document.querySelectorAll('.bet-type-btn').forEach(btn => {
