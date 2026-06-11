@@ -1698,11 +1698,12 @@
       document.getElementById('course-custom-drawer').style.display = 'none';
     });
 
-    // Initial load — render the racecard immediately, then update when weather arrives
+    // Initial load — render everything immediately, weather updates later async
     renderVenueSelectDropdowns();
     generateRace('阪神', '11'); // Default loads Takarazuka Kinen 2026!
-    renderAll(); // Show racecard right away, don't wait for weather
-    fetchLiveWeather(); // Fetch weather async and update when ready
+    renderWeatherGrid();  // Clear the spinner immediately with placeholder cards
+    renderAll();          // Show racecard/predictions right away
+    fetchLiveWeather();   // Fetch weather async and update when ready
 
     // Betting Listeners
     document.querySelectorAll('.bet-type-btn').forEach(btn => {
