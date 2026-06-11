@@ -1,5 +1,5 @@
 /**
- * Keiba Hub - Application Logic (Unified JRA & NAR Edition - Real Race Preset)
+ * Keiba Hub - Application Logic (Unified JRA & NAR Edition - 2026 Real Race Preset)
  * Powered by 5-Factor AI Prediction & Live Weather API
  */
 
@@ -43,216 +43,175 @@
       { name: "C.ルメール", skill: 98 },
       { name: "川田将雅", skill: 96 },
       { name: "坂井瑠星", skill: 91 },
-      { name: "武豊", skill: 90 },
+      { name: "武豊", skill: 93 },
       { name: "戸崎圭太", skill: 89 },
       { name: "横山武史", skill: 89 },
-      { name: "松山弘平", skill: 86 },
-      { name: "M.デムーロ", skill: 86 },
-      { name: "岩田望来", skill: 84 },
-      { name: "横山和生", skill: 82 },
-      { name: "田辺裕信", skill: 81 },
-      { name: "石橋脩", skill: 78 }
+      { name: "松山弘平", skill: 87 },
+      { name: "D.レーン", skill: 95 },
+      { name: "岩田望来", skill: 85 },
+      { name: "佐々木大輔", skill: 84 },
+      { name: "津村明秀", skill: 81 },
+      { name: "横山和生", skill: 82 }
     ],
     nar: [
       { name: "吉原寛人", skill: 97 },
       { name: "森泰斗", skill: 95 },
       { name: "御神本訓史", skill: 93 },
-      { name: "笹川翼", skill: 93 },
-      { name: "矢野貴之", skill: 92 },
-      { name: "赤岡修次", skill: 90 },
-      { name: "岡部誠", skill: 89 },
-      { name: "山崎誠士", skill: 85 }
+      { name: "落合玄太", skill: 88 },
+      { name: "野畑凌", skill: 86 },
+      { name: "川須栄彦", skill: 83 },
+      { name: "藤本現暉", skill: 80 },
+      { name: "岡村健司", skill: 82 }
     ]
   };
 
-  // Preset Famous Horses Database (Fully loaded with real 2023 Arima Kinen & 2023 Tokyo Daishoten entries)
+  // Preset Famous Horses Database (2026 Active Horses)
   const HORSE_DATABASE = {
-    "ドウデュース": {
-      name: "ドウデュース", gender: "牡", age: 4, runStyle: "差し", speedIndex: 98,
-      jockey: "武豊", trainer: "友道康夫 (栗東)",
-      clockwisePct: 95, counterClockwisePct: 90, heavyTrackPerformance: 80,
-      venuePerformance: { "中山": 95, "東京": 95, "阪神": 90 },
-      pedigree: "父: ハーツクライ / 母父: Vindication",
+    "シックスペンス": {
+      name: "シックスペンス", gender: "牡", age: 3, runStyle: "先行", speedIndex: 97,
+      jockey: "武豊", trainer: "国枝栄 (美浦)",
+      clockwisePct: 100, counterClockwisePct: 95, heavyTrackPerformance: 80,
+      venuePerformance: { "東京": 95, "中山": 100 },
+      pedigree: "父: キズナ / 母父: Twirling Candy",
       pastRaces: [
-        { date: "2023/12/24", venue: "中山", name: "有馬記念 (G1)", distance: "2500", condition: "良", place: 1, popular: 2, margin: "-0.1秒差", jockey: "武豊" },
-        { date: "2023/11/26", venue: "東京", name: "ジャパンC (G1)", distance: "2400", condition: "良", place: 4, popular: 3, margin: "1.2秒差", jockey: "戸崎圭太" },
-        { date: "2023/10/29", venue: "東京", name: "天皇賞・秋 (G1)", distance: "2000", condition: "良", place: 7, popular: 2, margin: "1.4秒差", jockey: "戸崎圭太" },
-        { date: "2023/02/12", venue: "阪神", name: "京都記念 (G2)", distance: "2200", condition: "良", place: 1, popular: 1, margin: "-0.6秒差", jockey: "武豊" },
-        { date: "2022/10/02", venue: "フランス", name: "凱旋門賞 (G1)", distance: "2400", condition: "重", place: 19, popular: 10, margin: "4.5秒差", jockey: "武豊" }
+        { date: "2026/06/07", venue: "東京", name: "安田記念 (G1)", distance: "1600", condition: "良", place: 1, popular: 1, margin: "-0.2秒差", jockey: "武豊" },
+        { date: "2026/03/17", venue: "中山", name: "スプリングS (G2)", distance: "1800", condition: "良", place: 1, popular: 1, margin: "-0.6秒差", jockey: "C.ルメール" },
+        { date: "2025/12/14", venue: "中山", name: "ひいらぎ賞 (1勝)", distance: "1600", condition: "良", place: 1, popular: 1, margin: "-0.3秒差", jockey: "石橋脩" },
+        { date: "2025/09/24", venue: "新潟", name: "2歳新馬", distance: "1600", condition: "良", place: 1, popular: 2, margin: "-0.2秒差", jockey: "ルメール" }
       ]
     },
-    "スターズオンアース": {
-      name: "スターズオンアース", gender: "牝", age: 4, runStyle: "先行", speedIndex: 96,
-      jockey: "C.ルメール", trainer: "高柳瑞樹 (美浦)",
+    "ステレンボッシュ": {
+      name: "ステレンボッシュ", gender: "牝", age: 3, runStyle: "差し", speedIndex: 96,
+      jockey: "D.レーン", trainer: "国枝栄 (美浦)",
       clockwisePct: 95, counterClockwisePct: 100, heavyTrackPerformance: 85,
-      venuePerformance: { "中山": 90, "東京": 100, "阪神": 95 },
-      pedigree: "父: ドゥラメンテ / 母父: Smart Strike",
+      venuePerformance: { "東京": 100, "阪神": 95 },
+      pedigree: "父: エピファネイア / 母父: ルーラーシップ",
       pastRaces: [
-        { date: "2023/12/24", venue: "中山", name: "有馬記念 (G1)", distance: "2500", condition: "良", place: 2, popular: 7, margin: "0.1秒差", jockey: "C.ルメール" },
-        { date: "2023/11/26", venue: "東京", name: "ジャパンC (G1)", distance: "2400", condition: "良", place: 3, popular: 5, margin: "0.9秒差", jockey: "W.ビュイック" },
-        { date: "2023/05/14", venue: "東京", name: "ヴィクトリアM (G1)", distance: "1600", condition: "良", place: 3, popular: 1, margin: "0.1秒差", jockey: "C.ルメール" },
-        { date: "2023/04/02", venue: "阪神", name: "大阪杯 (G1)", distance: "2000", condition: "良", place: 2, popular: 1, margin: "0.0秒差", jockey: "C.ルメール" },
-        { date: "2022/10/16", venue: "阪神", name: "秋華賞 (G1)", distance: "2000", condition: "良", place: 3, popular: 1, margin: "0.1秒差", jockey: "C.ルメール" }
+        { date: "2026/06/07", venue: "東京", name: "安田記念 (G1)", distance: "1600", condition: "良", place: 2, popular: 2, margin: "0.2秒差", jockey: "D.レーン" },
+        { date: "2026/04/07", venue: "阪神", name: "桜花賞 (G1)", distance: "1600", condition: "良", place: 1, popular: 2, margin: "-0.1秒差", jockey: "J.モレイラ" },
+        { date: "2025/12/10", venue: "阪神", name: "阪神JF (G1)", distance: "1600", condition: "良", place: 2, popular: 3, margin: "0.0秒差", jockey: "ルメール" },
+        { date: "2025/11/18", venue: "東京", name: "赤松賞 (1勝)", distance: "1600", condition: "良", place: 1, popular: 1, margin: "-0.2秒差", jockey: "戸崎圭太" }
       ]
     },
-    "タイトルホルダー": {
-      name: "タイトルホルダー", gender: "牡", age: 5, runStyle: "逃げ", speedIndex: 95,
-      jockey: "横山和生", trainer: "栗田徹 (美浦)",
-      clockwisePct: 90, counterClockwisePct: 50, heavyTrackPerformance: 95,
-      venuePerformance: { "阪神": 100, "中山": 95, "東京": 60 },
-      pedigree: "父: ドゥラメンテ / 母父: Motivator",
+    "トロヴァトーレ": {
+      name: "トロヴァトーレ", gender: "牡", age: 3, runStyle: "差し", speedIndex: 94,
+      jockey: "C.ルメール", trainer: "鹿戸雄一 (美浦)",
+      clockwisePct: 90, counterClockwisePct: 90, heavyTrackPerformance: 75,
+      venuePerformance: { "東京": 95, "中山": 95 },
+      pedigree: "父: レイデオロ / 母父: ハーツクライ",
       pastRaces: [
-        { date: "2023/12/24", venue: "中山", name: "有馬記念 (G1)", distance: "2500", condition: "良", place: 3, popular: 4, margin: "0.2秒差", jockey: "横山和生" },
-        { date: "2023/11/26", venue: "東京", name: "ジャパンC (G1)", distance: "2400", condition: "良", place: 5, popular: 4, margin: "1.5秒差", jockey: "横山和生" },
-        { date: "2023/09/24", venue: "中山", name: "オールカマー (G2)", distance: "2200", condition: "良", place: 2, popular: 1, margin: "0.2秒差", jockey: "横山和生" },
-        { date: "2023/04/30", venue: "京都", name: "天皇賞・春 (G1)", distance: "3200", condition: "良", place: 16, popular: 1, margin: "競走中止", jockey: "横山和生" },
-        { date: "2023/03/25", venue: "中山", name: "日経賞 (G2)", distance: "2500", condition: "不良", place: 1, popular: 1, margin: "-1.3秒差", jockey: "横山和生" }
+        { date: "2026/06/07", venue: "東京", name: "安田記念 (G1)", distance: "1600", condition: "良", place: 3, popular: 5, margin: "0.3秒差", jockey: "C.ルメール" },
+        { date: "2026/03/03", venue: "中山", name: "弥生賞 (G2)", distance: "2000", condition: "良", place: 6, popular: 1, margin: "0.5秒差", jockey: "C.ルメール" },
+        { date: "2025/11/25", venue: "東京", name: "葉牡丹賞 (1勝)", distance: "2000", condition: "良", place: 1, popular: 1, margin: "-0.4秒差", jockey: "ビュイック" },
+        { date: "2025/09/16", venue: "中山", name: "2歳新馬", distance: "2000", condition: "良", place: 1, popular: 1, margin: "-0.4秒差", jockey: "ルメール" }
       ]
     },
-    "ジャスティンパレス": {
-      name: "ジャスティンパレス", gender: "牡", age: 4, runStyle: "差し", speedIndex: 96,
-      jockey: "横山武史", trainer: "杉山晴紀 (栗東)",
-      clockwisePct: 85, counterClockwisePct: 85, heavyTrackPerformance: 80,
-      venuePerformance: { "京都": 100, "阪神": 90, "中山": 85, "東京": 90 },
-      pedigree: "父: ディープインパクト / 母父: Royal Anthem",
+    "レーベンスティール": {
+      name: "レーベンスティール", gender: "牡", age: 4, runStyle: "先行", speedIndex: 95,
+      jockey: "戸崎圭太", trainer: "田中博康 (美浦)",
+      clockwisePct: 90, counterClockwisePct: 95, heavyTrackPerformance: 80,
+      venuePerformance: { "東京": 90, "新潟": 100, "中山": 90 },
+      pedigree: "父: リアルスティール / 母父: トウカイテイオー",
       pastRaces: [
-        { date: "2023/12/24", venue: "中山", name: "有馬記念 (G1)", distance: "2500", condition: "良", place: 4, popular: 1, margin: "0.3秒差", jockey: "横山武史" },
-        { date: "2023/10/29", venue: "東京", name: "天皇賞・秋 (G1)", distance: "2000", condition: "良", place: 2, popular: 6, margin: "0.4秒差", jockey: "横山武史" },
-        { date: "2023/06/25", venue: "阪神", name: "宝塚記念 (G1)", distance: "2200", condition: "良", place: 3, popular: 2, margin: "0.2秒差", jockey: "鮫島克駿" },
-        { date: "2023/04/30", venue: "京都", name: "天皇賞・春 (G1)", distance: "3200", condition: "良", place: 1, popular: 2, margin: "-0.4秒差", jockey: "C.ルメール" },
-        { date: "2023/03/19", venue: "阪神", name: "阪神大賞典 (G2)", distance: "3000", condition: "良", place: 1, popular: 1, margin: "-0.3秒差", jockey: "C.ルメール" }
+        { date: "2026/06/07", venue: "東京", name: "安田記念 (G1)", distance: "1600", condition: "良", place: 8, popular: 3, margin: "0.6秒差", jockey: "戸崎圭太" },
+        { date: "2025/09/18", venue: "中山", name: "セントライト記念 (G2)", distance: "2200", condition: "良", place: 1, popular: 2, margin: "-0.4秒差", jockey: "モレイラ" },
+        { date: "2025/07/02", venue: "福島", name: "ラジオNIKKEI賞 (G3)", distance: "1800", condition: "良", place: 3, popular: 1, margin: "0.1秒差", jockey: "戸崎圭太" }
       ]
     },
-    "シャフリヤール": {
-      name: "シャフリヤール", gender: "牡", age: 5, runStyle: "差し", speedIndex: 94,
-      jockey: "松山弘平", trainer: "藤原英昭 (栗東)",
-      clockwisePct: 70, counterClockwisePct: 95, heavyTrackPerformance: 70,
-      venuePerformance: { "東京": 100, "中山": 75 },
-      pedigree: "父: ディープインパクト / 母父: Essence of Dubai",
+    "シャマル": {
+      name: "シャマル", gender: "牡", age: 7, runStyle: "逃げ", speedIndex: 95,
+      jockey: "川須栄彦", trainer: "松下武士 (栗東)",
+      clockwisePct: 90, counterClockwisePct: 90, heavyTrackPerformance: 90,
+      venuePerformance: { "船橋": 100, "大井": 95 },
+      pedigree: "父: スマートファルコン / 母父: アグネスデジタル",
       pastRaces: [
-        { date: "2023/12/24", venue: "中山", name: "有馬記念 (G1)", distance: "2500", condition: "良", place: 5, popular: 8, margin: "0.3秒差", jockey: "松山弘平" },
-        { date: "2023/11/04", venue: "アメリカ", name: "BCターフ (G1)", distance: "2400", condition: "良", place: 3, popular: 5, margin: "0.2秒差", jockey: "C.デムーロ" },
-        { date: "2023/08/20", venue: "札幌", name: "札幌記念 (G2)", distance: "2000", condition: "稍重", place: 11, popular: 2, margin: "3.2秒差", jockey: "横山武史" },
-        { date: "2023/03/25", venue: "ドバイ", name: "シーマC (G1)", distance: "2410", condition: "良", place: 5, popular: 3, margin: "1.2秒差", jockey: "C.デムーロ" },
-        { date: "2022/11/27", venue: "東京", name: "ジャパンC (G1)", distance: "2400", condition: "良", place: 2, popular: 1, margin: "0.1秒差", jockey: "C.デムーロ" }
+        { date: "2026/05/05", venue: "船橋", name: "かしわ記念 (Jpn1)", distance: "1600", condition: "良", place: 1, popular: 5, margin: "-0.2秒差", jockey: "川須栄彦" },
+        { date: "2026/03/26", venue: "高知", name: "黒船賞 (Jpn3)", distance: "1400", condition: "不良", place: 1, popular: 2, margin: "-0.6秒差", jockey: "川須栄彦" },
+        { date: "2025/11/03", venue: "盛岡", name: "JBCスプリント (Jpn1)", distance: "1200", condition: "良", place: 3, popular: 3, margin: "0.3秒差", jockey: "川須栄彦" }
       ]
     },
-    "タスティエーラ": {
-      name: "タスティエーラ", gender: "牡", age: 3, runStyle: "先行", speedIndex: 93,
-      jockey: "R.ムーア", trainer: "堀宣行 (美浦)",
-      clockwisePct: 80, counterClockwisePct: 90, heavyTrackPerformance: 80,
-      venuePerformance: { "東京": 95, "中山": 90, "京都": 85 },
-      pedigree: "父: サトノクラウン / 母父: マンハッタンカフェ",
+    "コスタノヴァ": {
+      name: "コスタノヴァ", gender: "牡", age: 4, runStyle: "先行", speedIndex: 94,
+      jockey: "D.レーン", trainer: "木村哲也 (美浦)",
+      clockwisePct: 80, counterClockwisePct: 95, heavyTrackPerformance: 80,
+      venuePerformance: { "船橋": 95, "東京": 90 },
+      pedigree: "父: ロードカナロア / 母父: フレンチデピュティ",
       pastRaces: [
-        { date: "2023/12/24", venue: "中山", name: "有馬記念 (G1)", distance: "2500", condition: "良", place: 6, popular: 3, margin: "0.4秒差", jockey: "R.ムーア" },
-        { date: "2023/10/22", venue: "京都", name: "菊花賞 (G1)", distance: "3000", condition: "良", place: 2, popular: 2, margin: "0.6秒差", jockey: "J.モレイラ" },
-        { date: "2023/05/28", venue: "東京", name: "日本ダービー (G1)", distance: "2400", condition: "良", place: 1, popular: 4, margin: "-0.0秒差", jockey: "D.レーン" },
-        { date: "2023/04/16", venue: "中山", name: "皐月賞 (G1)", distance: "2000", condition: "重", place: 2, popular: 5, margin: "0.2秒差", jockey: "松山弘平" },
-        { date: "2023/03/05", venue: "中山", name: "弥生賞 (G2)", distance: "2000", condition: "良", place: 1, popular: 3, margin: "-0.2秒差", jockey: "松山弘平" }
+        { date: "2026/05/05", venue: "船橋", name: "かしわ記念 (Jpn1)", distance: "1600", condition: "良", place: 2, popular: 2, margin: "0.2秒差", jockey: "D.レーン" },
+        { date: "2025/11/18", venue: "東京", name: "武蔵野S (G3)", distance: "1600", condition: "良", place: 1, popular: 1, margin: "-0.1秒差", jockey: "ルメール" }
       ]
     },
-    "ソールオリエンス": {
-      name: "ソールオリエンス", gender: "牡", age: 3, runStyle: "追込", speedIndex: 92,
-      jockey: "川田将雅", trainer: "手塚貴久 (美浦)",
-      clockwisePct: 90, counterClockwisePct: 80, heavyTrackPerformance: 95,
-      venuePerformance: { "中山": 100, "東京": 80 },
-      pedigree: "父: キタサンブラック / 母父: Motivator",
+    "ミッキーファイト": {
+      name: "ミッキーファイト", gender: "牡", age: 3, runStyle: "先行", speedIndex: 94,
+      jockey: "C.ルメール", trainer: "田中博康 (美浦)",
+      clockwisePct: 85, counterClockwisePct: 95, heavyTrackPerformance: 85,
+      venuePerformance: { "船橋": 90, "東京": 95, "中山": 95 },
+      pedigree: "父: ドレフォン / 母父: スペシャルウィーク",
       pastRaces: [
-        { date: "2023/12/24", venue: "中山", name: "有馬記念 (G1)", distance: "2500", condition: "良", place: 8, popular: 5, margin: "0.6秒差", jockey: "川田将雅" },
-        { date: "2023/10/22", venue: "京都", name: "菊花賞 (G1)", distance: "3000", condition: "良", place: 3, popular: 1, margin: "0.9秒差", jockey: "横山武史" },
-        { date: "2023/09/18", venue: "中山", name: "セントライト記念 (G2)", distance: "2200", condition: "良", place: 2, popular: 1, margin: "0.3秒差", jockey: "横山武史" },
-        { date: "2023/05/28", venue: "東京", name: "日本ダービー (G1)", distance: "2400", condition: "良", place: 2, popular: 1, margin: "0.0秒差", jockey: "横山武史" },
-        { date: "2023/04/16", venue: "中山", name: "皐月賞 (G1)", distance: "2000", condition: "重", place: 1, popular: 2, margin: "-0.2秒差", jockey: "横山武史" }
-      ]
-    },
-    "ウシュバテソーロ": {
-      name: "ウシュバテソーロ", gender: "牡", age: 6, runStyle: "差し", speedIndex: 98,
-      jockey: "川田将雅", trainer: "高木登 (美浦)",
-      clockwisePct: 95, counterClockwisePct: 85, heavyTrackPerformance: 90,
-      venuePerformance: { "大井": 100, "船橋": 95, "川崎": 90 },
-      pedigree: "父: オルフェーヴル / 母父: Kingmambo",
-      pastRaces: [
-        { date: "2023/12/29", venue: "大井", name: "東京大賞典 (G1)", distance: "2000", condition: "良", place: 1, popular: 1, margin: "-0.1秒差", jockey: "川田将雅" },
-        { date: "2023/09/27", venue: "船橋", name: "日本テレビ盃 (G2)", distance: "1800", condition: "良", place: 1, popular: 1, margin: "-0.4秒差", jockey: "川田将雅" },
-        { date: "2023/03/25", venue: "ドバイ", name: "ドバイワールドC (G1)", distance: "2000", condition: "良", place: 1, popular: 2, margin: "-0.5秒差", jockey: "川田将雅" },
-        { date: "2023/02/01", venue: "川崎", name: "川崎記念 (Jpn1)", distance: "2100", condition: "良", place: 1, popular: 1, margin: "-0.1秒差", jockey: "横山武史" },
-        { date: "2022/12/29", venue: "大井", name: "東京大賞典 (G1)", distance: "2000", condition: "良", place: 1, popular: 1, margin: "-0.0秒差", jockey: "横山武史" }
-      ]
-    },
-    "ミックファイア": {
-      name: "ミックファイア", gender: "牡", age: 3, runStyle: "先行", speedIndex: 93,
-      jockey: "吉原寛人", trainer: "渡辺和雄 (大井)",
-      clockwisePct: 90, counterClockwisePct: 85, heavyTrackPerformance: 85,
-      venuePerformance: { "大井": 100, "船橋": 90 },
-      pedigree: "父: シニスターミニスター / 母父: ブライアンズタイム",
-      pastRaces: [
-        { date: "2023/12/29", venue: "大井", name: "東京大賞典 (G1)", distance: "2000", condition: "良", place: 8, popular: 4, margin: "1.4秒差", jockey: "吉原寛人" },
-        { date: "2023/11/03", venue: "大井", name: "JBCクラシック (Jpn1)", distance: "2000", condition: "良", place: 3, popular: 3, margin: "0.8秒差", jockey: "御神本訓史" },
-        { date: "2023/07/12", venue: "大井", name: "ジャパンDダービー (Jpn1)", distance: "2000", condition: "良", place: 1, popular: 1, margin: "-0.4秒差", jockey: "御神本訓史" },
-        { date: "2023/06/07", venue: "大井", name: "東京ダービー (S1)", distance: "2000", condition: "重", place: 1, popular: 1, margin: "-1.2秒差", jockey: "御神本訓史" },
-        { date: "2023/05/10", venue: "大井", name: "羽田盃 (S1)", distance: "1800", condition: "良", place: 1, popular: 2, margin: "-1.0秒差", jockey: "御神本訓史" }
+        { date: "2026/05/05", venue: "船橋", name: "かしわ記念 (Jpn1)", distance: "1600", condition: "良", place: 3, popular: 1, margin: "0.4秒差", jockey: "C.ルメール" },
+        { date: "2025/11/25", venue: "東京", name: "カトレアS (OP)", distance: "1600", condition: "良", place: 1, popular: 1, margin: "-0.8秒差", jockey: "戸崎圭太" }
       ]
     },
     "ウィルソンテソーロ": {
-      name: "ウィルソンテソーロ", gender: "牡", age: 4, runStyle: "差し", speedIndex: 94,
-      jockey: "松山弘平", trainer: "小手川準 (美浦)",
-      clockwisePct: 90, counterClockwisePct: 85, heavyTrackPerformance: 80,
-      venuePerformance: { "大井": 95, "盛岡": 90 },
+      name: "ウィルソンテソーロ", gender: "牡", age: 5, runStyle: "差し", speedIndex: 97,
+      jockey: "川田将雅", trainer: "小手川準 (美浦)",
+      clockwisePct: 90, counterClockwisePct: 90, heavyTrackPerformance: 85,
+      venuePerformance: { "大井": 100, "船橋": 95, "中京": 95 },
       pedigree: "父: キタサンブラック / 母父: Uncle Mo",
       pastRaces: [
-        { date: "2023/12/29", venue: "大井", name: "東京大賞典 (G1)", distance: "2000", condition: "良", place: 2, popular: 6, margin: "0.1秒差", jockey: "松山弘平" },
-        { date: "2023/12/03", venue: "中京", name: "チャンピオンズC (G1)", distance: "1800", condition: "良", place: 2, popular: 12, margin: "0.2秒差", jockey: "原優介" },
-        { date: "2023/11/03", venue: "大井", name: "JBCクラシック (Jpn1)", distance: "2000", condition: "良", place: 5, popular: 4, margin: "1.2秒差", jockey: "菅原明良" },
-        { date: "2023/07/17", venue: "盛岡", name: "マーキュリーC (Jpn3)", distance: "2000", condition: "良", place: 1, popular: 1, margin: "-0.7秒差", jockey: "川田将雅" },
-        { date: "2023/06/01", venue: "門別", name: "北海道スプリント (Jpn3)", distance: "1200", condition: "良", place: 1, popular: 1, margin: "-0.2秒差", jockey: "川田将雅" }
+        { date: "2026/05/05", venue: "船橋", name: "かしわ記念 (Jpn1)", distance: "1600", condition: "良", place: 5, popular: 3, margin: "0.7秒差", jockey: "川田将雅" },
+        { date: "2025/12/29", venue: "大井", name: "東京大賞典 (G1)", distance: "2000", condition: "良", place: 2, popular: 2, margin: "0.1秒差", jockey: "原優介" },
+        { date: "2025/12/03", venue: "中京", name: "チャンピオンズC (G1)", distance: "1800", condition: "良", place: 2, popular: 12, margin: "0.2秒差", jockey: "原優介" }
       ]
     },
-    "ドゥラエレーデ": {
-      name: "ドゥラエレーデ", gender: "牡", age: 3, runStyle: "先行", speedIndex: 92,
-      jockey: "B.ムルザバエフ", trainer: "池添学 (栗東)",
-      clockwisePct: 85, counterClockwisePct: 80, heavyTrackPerformance: 85,
-      venuePerformance: { "大井": 90, "中山": 90, "中京": 90 },
-      pedigree: "父: ドゥラメンテ / 母父: オルフェーヴル",
+    "ナチュラルライズ": {
+      name: "ナチュラルライズ", gender: "牡", age: 3, runStyle: "差し", speedIndex: 93,
+      jockey: "横山武史", trainer: "武井亮 (美浦)",
+      clockwisePct: 80, counterClockwisePct: 95, heavyTrackPerformance: 90,
+      venuePerformance: { "船橋": 90, "東京": 95 },
+      pedigree: "父: キズナ / 母父: アグネスデジタル",
       pastRaces: [
-        { date: "2023/12/29", venue: "大井", name: "東京大賞典 (G1)", distance: "2000", condition: "良", place: 3, popular: 3, margin: "0.4秒差", jockey: "B.ムルザバエフ" },
-        { date: "2023/12/03", venue: "中京", name: "チャンピオンズC (G1)", distance: "1800", condition: "良", place: 3, popular: 9, margin: "0.3秒差", jockey: "B.ムルザバエフ" },
-        { date: "2023/10/22", venue: "京都", name: "菊花賞 (G1)", distance: "3000", condition: "良", place: 12, popular: 8, margin: "2.1秒差", jockey: "坂井瑠星" },
-        { date: "2023/06/25", venue: "阪神", name: "宝塚記念 (G1)", distance: "2200", condition: "良", place: 10, popular: 8, margin: "0.7秒差", jockey: "幸英明" },
-        { date: "2022/12/28", venue: "中山", name: "ホープフルS (G1)", distance: "2000", condition: "良", place: 1, popular: 14, margin: "-0.0秒差", jockey: "B.ムルザバエフ" }
+        { date: "2026/05/05", venue: "船橋", name: "かしわ記念 (Jpn1)", distance: "1600", condition: "良", place: 4, popular: 4, margin: "0.5秒差", jockey: "横山武史" },
+        { date: "2025/12/14", venue: "中山", name: "全日本2歳優駿 (Jpn1)", distance: "1600", condition: "良", place: 2, popular: 2, margin: "0.2秒差", jockey: "ルメール" }
       ]
     }
   };
 
-  // Official entry datasets
+  // 2026 Real G1 Presets (Yasuda Kinen & Kashiwa Kinen)
   const SAMPLE_RACES = {
-    "arima": `第69回 有馬記念 (G1) 中山 11R 芝 右 2500m
-1 1 ソールオリエンス 牡3 56.0 川田将雅 8.3
-1 2 シャフリヤール 牡5 58.0 松山弘平 15.6
-2 3 ホウオウエミーズ 牝6 56.0 田辺裕信 85.0
-2 4 タイトルホルダー 牡5 58.0 横山和生 8.5
-3 5 ドウデュース 牡4 58.0 武豊 5.2
-3 6 ディープボンド 牡6 58.0 T.マーカンド 45.0
-4 7 アイアンバローズ 牡6 58.0 石橋脩 72.0
-4 8 ライラック 牝4 56.0 戸崎圭太 48.0
-5 9 ヒートオンビート 牡6 58.0 坂井瑠星 55.0
-5 10 ジャスティンパレス 牡4 58.0 横山武史 3.6
-6 11 ハーパー 牝3 54.0 岩田望来 33.0
-6 12 ウィンマリリン 牝6 56.0 L.モリス 68.0
-7 13 タスティエーラ 牡3 56.0 R.ムーア 6.8
-7 14 プラダリア 牡4 58.0 B.ムルザバエフ 42.0
-8 15 スルーセブンシーズ 牝5 56.0 C.ルメール 5.4
-8 16 スターズオンアース 牝4 56.0 C.ルメール 2.6`,
+    "arima": `第76回 安田記念 (G1) 東京 11R 芝 左 1600m
+1 1 レーベンスティール 牡4 58.0 戸崎圭太 4.2
+1 2 ロングラン セン6 58.0 F.ゴンサルベス 88.0
+2 3 オフトレイル 牡3 54.0 菅原明良 25.0
+2 4 シックスペンス 牡3 54.0 武豊 3.1
+3 5 サクラトゥジュール 牡9 58.0 佐々木大輔 65.0
+3 6 ステレンボッシュ 牝3 54.0 D.レーン 2.8
+4 7 スズハローム 牡4 58.0 藤懸貴志 42.0
+4 8 シャンパンカラー 牡4 58.0 岩田康誠 35.0
+5 9 ウォーターリヒト 牡3 54.0 高杉吏麒 72.0
+5 10 ルクソールカフェ 牡4 58.0 岩田望来 28.0
+6 11 ワールズエンド 牡3 54.0 津村明秀 18.0
+6 12 シリウスコルト 牡3 54.0 横山和生 52.0
+7 13 セイウンハーデス 牡6 58.0 幸英明 95.0
+7 14 ガイアフォース 牡5 58.0 横山武史 7.8
+8 15 ドラゴンブースト 牡3 54.0 丹内祐次 110.0
+8 16 パンジャタワー 牡3 54.0 松山弘平 14.2
+8 17 トロヴァトーレ 牡3 54.0 C.ルメール 5.6`,
     
-    "daishoten": `第69回 東京大賞典 (G1) 大井 11R ダート 右 2000m
-1 1 ランリョウオー 牡5 57.0 御神本訓史 48.0
-2 2 ノットゥルノ 牡4 57.0 武豊 15.0
-3 3 テンカハル 牡5 57.0 坂井瑠星 32.0
-4 4 ミックファイア 牡3 55.0 吉原寛人 7.5
-5 5 ウシュバテソーロ 牡6 57.0 川田将雅 1.7
-6 6 ドゥラエレーデ 牡3 55.0 B.ムルザバエフ 5.2
-7 7 キングズソード 牡4 57.0 岩田望来 8.5
-7 8 ウィルソンテソーロ 牡4 57.0 松山弘平 12.0
-8 9 マンガン 牡6 57.0 山崎誠士 120.0`
+    "daishoten": `第38回 かしわ記念 (Jpn1) 船橋 11R ダート 左 1600m
+1 1 シャマル 牡7 57.0 川須栄彦 5.4
+1 2 コスタノヴァ 牡4 57.0 D.レーン 3.2
+2 3 ロードフォンス 牡4 57.0 横山和生 12.0
+3 4 リコースパロー 牡3 55.0 澤田龍太郎 85.0
+3 5 ガバナビリティー 牡3 55.0 笠野雄大 120.0
+4 6 ジョージテソーロ 牡3 55.0 落合玄太 33.0
+4 7 ベアバッキューン 牡3 55.0 野畑凌 42.0
+5 8 ミッキーファイト 牡3 55.0 C.ルメール 2.1
+5 9 オーマイグッネス 牡4 57.0 藤本現暉 150.0
+6 10 ウィルソンテソーロ 牡5 57.0 川田将雅 4.5
+6 11 グランデマーレ 牡8 57.0 岡村健司 68.0
+7 12 リュードマン 牡6 57.0 篠谷葵 95.0
+8 13 ナチュラルライズ 牡3 55.0 横山武史 8.2`
   };
 
   // --- 2. APPLICATION STATE ---
@@ -260,15 +219,15 @@
     userBalance: 10000,
     activeTab: 'dashboard',
     currentHostType: 'jra',
-    currentVenueKey: '中山',
+    currentVenueKey: '東京', // Changed default to Tokyo
     currentRaceNum: '11',
     currentRace: {
-      name: "有馬記念",
+      name: "安田記念", // Changed default to Yasuda Kinen
       grade: "G1",
-      venue: "中山",
-      distance: "2500",
+      venue: "東京",
+      distance: "1600",
       type: "芝",
-      direction: "右",
+      direction: "左",
       trackCondition: "良",
       horses: []
     },
@@ -336,7 +295,7 @@
     for (let i = 0; i < 5; i++) {
       const place = 1 + Math.floor(Math.random() * 9);
       pastRaces.push({
-        date: `2025/0${9-i}/12`,
+        date: `2026/0${9-i}/12`,
         venue: venuesList[Math.floor(Math.random() * venuesList.length)],
         name: isDirtRace ? "一般ダート (OP)" : "条件戦 (1勝クラス)",
         distance: isDirtRace ? "1600" : "2000",
@@ -378,13 +337,13 @@
   // --- 5. DYNAMIC RACE GENERATION ENGINE ---
 
   function generateRace(venueKey, raceNum, customSettings = null) {
-    // If JRA 11R at 中山, load Real Arima Kinen preset
-    if (venueKey === '中山' && raceNum === '11' && !customSettings) {
+    // If JRA 11R at 東京, load Real Yasuda Kinen preset
+    if (venueKey === '東京' && raceNum === '11' && !customSettings) {
       loadRacePreset('arima');
       return;
     }
-    // If NAR 11R at 大井, load Real Tokyo Daishoten preset
-    if (venueKey === '大井' && raceNum === '11' && !customSettings) {
+    // If NAR 11R at 船橋, load Real Kashiwa Kinen preset
+    if (venueKey === '船橋' && raceNum === '11' && !customSettings) {
       loadRacePreset('daishoten');
       return;
     }
@@ -409,9 +368,10 @@
     if (raceNum === '11') {
       grade = "G1";
       if (venueKey === '中山') raceName = "有馬記念 (G1)";
-      else if (venueKey === '東京') raceName = "日本ダービー (G1)";
-      else if (venueKey === '大井') raceName = "東京大賞典 (G1)";
-      else if (venueKey === '京都') raceName = "天皇賞・春 (G1)";
+      else if (venueKey === '東京') raceName = "安田記念 (G1)";
+      else if (venueKey === '船橋') raceName = "かしわ記念 (Jpn1)";
+      else if (venueKey === '大井') raceName = "帝王賞 (Jpn1)";
+      else if (venueKey === '京都') raceName = "マイルCS (G1)";
       else if (venueKey === '阪神') raceName = "宝塚記念 (G1)";
       else raceName = `${venueKey}大賞典 (G1)`;
     } else if (raceNum === '10' || raceNum === '12') {
@@ -461,7 +421,7 @@
 
       if (grade === "G1" && i <= 3) {
         const suitablePresets = presetHorses.filter(h => {
-          const isDirtSpec = h.name === "ウシュバテソーロ" || h.name === "ミックファイア" || h.name === "ウィルソンテソーロ";
+          const isDirtSpec = h.name === "シャマル" || h.name === "コスタノヴァ" || h.name === "ミッキーファイト" || h.name === "ウィルソンテソーロ" || h.name === "ナチュラルライズ";
           return trackType === "ダート" ? isDirtSpec : !isDirtSpec;
         });
 
@@ -616,9 +576,9 @@
     const lines = rawText.split('\n');
     const header = lines[0];
     
-    const nameMatch = header.match(/(第\d+回\s+.+?)(?=\s+\w+競馬場|\s+中山|\s+東京|\s+京都|\s+阪神|\s+新潟|\s+中京|\s+小倉|\s+福島|\s+函館|\s+札幌|\s+大井)/) || [null, "G1 レース"];
+    const nameMatch = header.match(/(第\d+回\s+.+?)(?=\s+\w+競馬場|\s+中山|\s+東京|\s+京都|\s+阪神|\s+新潟|\s+中京|\s+小倉|\s+福島|\s+函館|\s+札幌|\s+大井|\s+船橋)/) || [null, "G1 レース"];
     
-    let venue = "中山";
+    let venue = "東京";
     for (const vKey in VENUES) {
       if (header.includes(vKey)) {
         venue = vKey;
@@ -633,7 +593,7 @@
 
     state.currentRace = {
       name: nameMatch[1] ? nameMatch[1].trim() : "カスタムレース",
-      grade: header.includes("G1") ? "G1" : (header.includes("G2") ? "G2" : "G3"),
+      grade: header.includes("G1") || header.includes("Jpn1") ? "G1" : (header.includes("G2") ? "G2" : "G3"),
       venue: venue,
       distance: distMatch[1],
       type: type,
@@ -960,10 +920,10 @@
     
     let markSymbol = "";
     if (h.aiMark === "mark-honmei") markSymbol = " [◎ 本命]";
-    else if (h.aiMark === "mark-taiko") markSymbol = " [○ 対抗]";
-    else if (h.aiMark === "mark-ana") markSymbol = " [▲ 単穴]";
-    else if (h.aiMark === "mark-renge") markSymbol = " [△ 連下]";
-    else if (h.aiMark === "mark-hoshiana") markSymbol = " [☆ 穴馬]";
+    else if (h.aiMark === "mark-taiko") markSymbol = " [○ 对抗]";
+    else if (h.aiMark === "mark-ana") markSymbol = " [▲ 单穴]";
+    else if (h.aiMark === "mark-renge") markSymbol = " [△ 连下]";
+    else if (h.aiMark === "mark-hoshiana") markSymbol = " [☆ 穴马]";
 
     document.getElementById('detail-header-title').innerHTML = `<i data-lucide="search"></i> 競走馬分析：<strong>${h.name}</strong>${markSymbol}`;
     
@@ -1215,14 +1175,6 @@
     }
   }
 
-  function renderAll() {
-    document.getElementById('balance-val').textContent = state.userBalance.toLocaleString();
-    renderRacecard();
-    renderBettingTab();
-    renderHistoryList();
-    renderDatabaseGrid();
-  }
-
   // --- 11. SIMULATOR ANIMATOR ---
 
   function startRaceSimulation() {
@@ -1346,17 +1298,17 @@
       let startIdx = 0;
       let headerStr = lines[0];
       let raceName = "コピペインポートレース";
-      let venue = state.currentVenueKey || "中山";
-      let distance = "2000";
+      let venue = state.currentVenueKey || "東京";
+      let distance = "1600";
       let grade = "G1";
-      let direction = "右";
+      let direction = "左";
       let type = "芝";
 
       if (lines[0] && !/^\d+\s+\d+/.test(lines[0].trim())) {
         startIdx = 1;
-        const nameMatch = headerStr.match(/(第\d+回\s+.+?)(?=\s+\w+競馬場|\s+中山|\s+東京|\s+京都|\s+阪神|\s+新潟|\s+中京|\s+小倉|\s+福島|\s+函館|\s+札幌|\s+大井)/) || [null, "コピペレース"];
+        const nameMatch = headerStr.match(/(第\d+回\s+.+?)(?=\s+\w+競馬場|\s+中山|\s+東京|\s+京都|\s+阪神|\s+新潟|\s+中京|\s+小倉|\s+福島|\s+函館|\s+札幌|\s+大井|\s+船橋)/) || [null, "コピペレース"];
         raceName = nameMatch[1] ? nameMatch[1].trim() : "コピペレース";
-        grade = headerStr.includes("G1") ? "G1" : (headerStr.includes("G2") ? "G2" : "G3");
+        grade = headerStr.includes("G1") || headerStr.includes("Jpn1") ? "G1" : (headerStr.includes("G2") ? "G2" : "G3");
         
         for (const vKey in VENUES) {
           if (headerStr.includes(vKey)) {
@@ -1365,7 +1317,7 @@
           }
         }
         
-        const distMatch = headerStr.match(/(\d+)m/) || [null, "2000"];
+        const distMatch = headerStr.match(/(\d+)m/) || [null, "1600"];
         distance = distMatch[1];
         direction = headerStr.includes("左") ? "左" : "右";
         type = headerStr.includes("ダ") ? "ダート" : "芝";
@@ -1624,7 +1576,7 @@
 
     // Initial load
     renderVenueSelectDropdowns();
-    generateRace('中山', '11'); // Arima Kinen default
+    generateRace('東京', '11'); // 2026 Yasuda Kinen default on startup
     fetchLiveWeather();
 
     // Betting Listeners
@@ -1719,7 +1671,7 @@
     });
 
     document.getElementById('load-sample-derby-btn').addEventListener('click', () => {
-      document.getElementById('jra-paste-area').value = SAMPLE_RACES.daishoten; // Load Tokyo Daishoten (NAR) instead of derby!
+      document.getElementById('jra-paste-area').value = SAMPLE_RACES.daishoten; // Load Kashiwa Kinen (NAR 2026)
       parseJraOfficialText(SAMPLE_RACES.daishoten);
     });
 
