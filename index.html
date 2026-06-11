@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Keiba Hub | 競馬結果予想＆AIシミュレーター</title>
-  <meta name="description" content="JRA（中央競馬）＆地方競馬全24会場対応のAI予想シミュレーター。リアルタイム天気連動、コピペ出馬表生成、仮想ベッティング機能搭載。">
+  <title>Keiba Hub | 2026年最新結果予想＆AIシミュレーター</title>
+  <meta name="description" content="2026年最新の宝塚記念・安田記念・かしわ記念の枠順を完全再現。リアルタイムお天気連動、コピペ出馬表、模擬ベッティング対応。">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
         <div class="logo-icon">駿</div>
         <div>
           <span class="logo-text">KEIBA HUB</span>
-          <div class="logo-sub">JRA & NAR AI Prediction Engine</div>
+          <div class="logo-sub">2026 JRA & NAR AI Prediction Engine</div>
         </div>
       </a>
       
@@ -143,7 +143,7 @@
               </div>
               <div class="selector-group">
                 <label for="custom-distance">レース距離 (m)</label>
-                <input type="number" id="custom-distance" class="input-number-custom" value="2000" min="800" max="3600" step="100">
+                <input type="number" id="custom-distance" class="input-number-custom" value="2200" min="800" max="3600" step="100">
               </div>
               <div class="selector-group">
                 <label for="custom-grade">レース格式</label>
@@ -171,8 +171,8 @@
             <div class="race-title-area">
               <span class="race-grade-badge" id="race-grade">G1</span>
               <div>
-                <h2 class="race-name-main" id="race-name">有馬記念</h2>
-                <div class="race-details-text" id="race-meta">中山 11R | 芝 右回り 2500m</div>
+                <h2 class="race-name-main" id="race-name">宝塚記念</h2>
+                <div class="race-details-text" id="race-meta">阪神 11R | 芝 右回り 2200m</div>
               </div>
             </div>
             <div class="text-gold" id="current-track-condition-badge">芝: 良</div>
@@ -201,54 +201,88 @@
           </div>
         </div>
 
-        <!-- Right Column: Quick Stats or General AI Info -->
-        <div class="glass-panel">
-          <div class="panel-header">
-            <h2 class="panel-title">
-              <i data-lucide="brain"></i> AI予想アルゴリズム解説
-            </h2>
-          </div>
-          <div class="panel-body" style="display: flex; flex-direction: column; gap: 1.25rem;">
-            <p style="font-size: 0.85rem; color: var(--text-secondary);">
-              本サイトのAI結果予想は、以下の**5つの固定因子**を数学的モデルに基づいて集計し、各馬の能力指数および本命（◎）マークを算出しています。
-            </p>
-            
-            <div class="factors-progress-grid">
-              <div class="factor-progress-item">
-                <span class="factor-name">スピード指数</span>
-                <div class="factor-bar-bg"><div class="factor-bar-fill" style="width: 30%; background: #ffd600;"></div></div>
-                <span class="factor-value">30%</span>
-              </div>
-              <div class="factor-progress-item">
-                <span class="factor-name">近走成績</span>
-                <div class="factor-bar-bg"><div class="factor-bar-fill" style="width: 25%; background: #00e676;"></div></div>
-                <span class="factor-value">25%</span>
-              </div>
-              <div class="factor-progress-item">
-                <span class="factor-name">会場適性</span>
-                <div class="factor-bar-bg"><div class="factor-bar-fill" style="width: 20%; background: #2979ff;"></div></div>
-                <span class="factor-value">20%</span>
-              </div>
-              <div class="factor-progress-item">
-                <span class="factor-name">騎手適性</span>
-                <div class="factor-bar-bg"><div class="factor-bar-fill" style="width: 15%; background: #ea80fc;"></div></div>
-                <span class="factor-value">15%</span>
-              </div>
-              <div class="factor-progress-item">
-                <span class="factor-name">馬場・気象適性</span>
-                <div class="factor-bar-bg"><div class="factor-bar-fill" style="width: 10%; background: #ff9100;"></div></div>
-                <span class="factor-value">10%</span>
-              </div>
+        <!-- Right Column: 1-Week Race Calendar & Live Information Feed -->
+        <div class="details-column">
+          
+          <!-- 1-Week Race Calendar -->
+          <div class="glass-panel">
+            <div class="panel-header" style="padding: 1rem 1.25rem;">
+              <h2 class="panel-title" style="font-size: 1.05rem;">
+                <i data-lucide="calendar"></i> 直近1週間の予想レース (6/11〜6/17)
+              </h2>
             </div>
+            <div class="panel-body" style="padding: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem;">
+              <div class="info-alert" style="padding: 0.5rem; margin-bottom: 0.4rem; font-size: 0.75rem; text-align: center;">
+                クリックすると、2026年実在レース枠順をロードします。
+              </div>
+              
+              <div id="calendar-race-list" style="display: flex; flex-direction: column; gap: 0.4rem;">
+                <div class="past-race-card" style="border-left: 3px solid var(--color-gold); cursor: pointer; padding: 0.5rem 0.75rem;" onclick="window.app.loadCalendarRace('hokkaido')">
+                  <div class="flex-space" style="font-size: 0.7rem; font-weight: bold; color: #ff9100;">
+                    <span>6月11日(木) 地方・門別12R</span>
+                    <span>ダ 2000m</span>
+                  </div>
+                  <div style="font-weight: 700; color: #fff; font-size: 0.8rem;">北海優駿 (H1)</div>
+                </div>
 
-            <div class="info-alert">
-              <strong>💡 会場・天気の連動：</strong><br>
-              現在の天気や、レース場の回り方向（右/左）に応じて「会場適性」「馬場・気象適性」が変動し、最終指数がリアルタイムに補正されます。
+                <div class="past-race-card" style="border-left: 3px solid var(--color-emerald); cursor: pointer; padding: 0.5rem 0.75rem;" onclick="window.app.loadCalendarRace('hakodate')">
+                  <div class="flex-space" style="font-size: 0.7rem; font-weight: bold; color: var(--color-emerald);">
+                    <span>6月13日(土) 中央・函館11R</span>
+                    <span>芝 1200m</span>
+                  </div>
+                  <div style="font-weight: 700; color: #fff; font-size: 0.8rem;">函館スプリントS (G3)</div>
+                </div>
+
+                <div class="past-race-card" style="border-left: 3px solid var(--color-red); cursor: pointer; padding: 0.5rem 0.75rem;" onclick="window.app.loadCalendarRace('takarazuka')">
+                  <div class="flex-space" style="font-size: 0.7rem; font-weight: bold; color: var(--color-red);">
+                    <span>6月14日(日) 中央・阪神11R</span>
+                    <span>芝 2200m</span>
+                  </div>
+                  <div style="font-weight: 700; color: #fff; font-size: 0.85rem; display: flex; align-items: center; gap: 0.3rem;">
+                    宝塚記念 (G1) <span style="font-size: 0.65rem; background: var(--color-red); color:#fff; padding: 1px 4px; border-radius: 3px;">今週の目玉</span>
+                  </div>
+                </div>
+
+                <div class="past-race-card" style="border-left: 3px solid var(--color-emerald); cursor: pointer; padding: 0.5rem 0.75rem;" onclick="window.app.loadCalendarRace('epsom')">
+                  <div class="flex-space" style="font-size: 0.7rem; font-weight: bold; color: var(--color-emerald);">
+                    <span>6月14日(日) 中央・東京11R</span>
+                    <span>芝 1800m</span>
+                  </div>
+                  <div style="font-weight: 700; color: #fff; font-size: 0.8rem;">エプソムカップ (G3)</div>
+                </div>
+
+                <div class="past-race-card" style="border-left: 3px solid var(--color-gold); cursor: pointer; padding: 0.5rem 0.75rem;" onclick="window.app.loadCalendarRace('kanto')">
+                  <div class="flex-space" style="font-size: 0.7rem; font-weight: bold; color: #ff9100;">
+                    <span>6月17日(水) 地方・川崎11R</span>
+                    <span>ダ 2100m</span>
+                  </div>
+                  <div style="font-weight: 700; color: #fff; font-size: 0.8rem;">関東オークス (Jpn2)</div>
+                </div>
+              </div>
             </div>
-            
-            <button class="btn-premium" style="width: 100%; justify-content: center;" onclick="window.app.switchToTab('betting')">
-              <i data-lucide="ticket"></i> このレースでベッティングする
-            </button>
+          </div>
+
+          <!-- Real-Time Info Ticker & Prediction Updater -->
+          <div class="glass-panel">
+            <div class="panel-header" style="padding: 1rem 1.25rem;">
+              <h2 class="panel-title" style="font-size: 1.05rem;">
+                <i data-lucide="bell"></i> 追い切り・リアルタイム情報フィード
+              </h2>
+            </div>
+            <div class="panel-body" style="padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem;">
+              <p style="font-size: 0.8rem; color: var(--text-secondary);">
+                追い切りの状態、関係者の最新コメント、または当日の急な天候・馬場変化などを反映してAI結果予想を更新できます。
+              </p>
+              
+              <div id="live-news-box" style="background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-glass); border-radius: 8px; padding: 0.75rem; min-height: 80px; font-size: 0.8rem; line-height: 1.4;">
+                <div style="color: var(--color-gold); font-weight: bold; margin-bottom: 0.25rem;">[ニュース速報]</div>
+                <div id="live-news-content">週末の阪神競馬場は「良馬場」の見込み。各馬順調に最終調整を終えています。情報取得ボタンを押して最新の調教データを反映させてください。</div>
+              </div>
+
+              <button class="btn-premium" id="update-live-info-btn" style="width: 100%; justify-content: center; height: 38px; font-size: 0.85rem;">
+                <i data-lucide="refresh-cw"></i> 最新情報を取り込んで予想を更新
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -495,10 +529,10 @@
               <i data-lucide="check-circle-2"></i> テキストを解析して出馬表を更新
             </button>
             <button class="btn-secondary" id="load-sample-arima-btn">
-              有馬記念 (中央G1・サンプル) をロード
+              宝塚記念 (中央G1・今週のサンプル) をロード
             </button>
             <button class="btn-secondary" id="load-sample-derby-btn">
-              東京大賞典 (地方G1・サンプル) をロード
+              かしわ記念 (地方G1・サンプル) をロード
             </button>
           </div>
 

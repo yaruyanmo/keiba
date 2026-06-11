@@ -1,5 +1,5 @@
 /**
- * Keiba Hub - Application Logic (Unified JRA & NAR Edition - 2026 Real Race Preset)
+ * Keiba Hub - Application Logic (2026 Real-Time Calendar & Taker Edition)
  * Powered by 5-Factor AI Prediction & Live Weather API
  */
 
@@ -16,7 +16,7 @@
     "新潟": { host: "jra", name: "新潟競馬場", lat: 37.950, lon: 139.186, direction: "左", type: "芝", dists: [1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400] },
     "東京": { host: "jra", name: "東京競馬場", lat: 35.663, lon: 139.485, direction: "左", type: "芝", dists: [1400, 1600, 1800, 2000, 2300, 2400, 2500, 3400] },
     "中山": { host: "jra", name: "中山競馬場", lat: 35.727, lon: 139.962, direction: "右", type: "芝", dists: [1200, 1600, 1800, 2000, 2200, 2500, 3600] },
-    "中京": { host: "jra", name: "中京競馬場", lat: 35.066, lon: 136.988, direction: "左", type: "芝", dists: [1200, 1400, 1600, 2000, 2200] },
+    "中京": { host: "jra", name: "中京競馬場", lat: 35.066, lon: 136.988, direction: "left", type: "芝", dists: [1200, 1400, 1600, 2000, 2200] },
     "京都": { host: "jra", name: "京都競馬場", lat: 34.908, lon: 135.724, direction: "右", type: "芝", dists: [1200, 1400, 1600, 1800, 2000, 2200, 2400, 3000, 3200] },
     "阪神": { host: "jra", name: "阪神競馬場", lat: 34.767, lon: 135.362, direction: "右", type: "芝", dists: [1200, 1400, 1600, 1800, 2000, 2200, 2400, 3000] },
     "小倉": { host: "jra", name: "小倉競馬場", lat: 33.843, lon: 130.875, direction: "右", type: "芝", dists: [1200, 1800, 2000, 2600] },
@@ -26,7 +26,7 @@
     "川崎": { host: "nar", name: "川崎競馬場", lat: 35.534, lon: 139.715, direction: "左", type: "ダート", dists: [900, 1400, 1500, 1600, 2000, 2100] },
     "船橋": { host: "nar", name: "船橋競馬場", lat: 35.690, lon: 140.003, direction: "左", type: "ダート", dists: [1000, 1200, 1500, 1600, 1700, 1800, 2200] },
     "浦和": { host: "nar", name: "浦和競馬場", lat: 35.861, lon: 139.670, direction: "左", type: "ダート", dists: [800, 1300, 1400, 1500, 1900, 2000] },
-    "園田": { host: "nar", name: "園田競馬場", lat: 34.767, lon: 135.438, direction: "右", type: "ダート", dists: [820, 1230, 1400, 1700, 1870] },
+    "園田": { host: "nar", name: "園田競馬場", lat: 34.767, lon: 135.438, direction: "right", type: "ダート", dists: [820, 1230, 1400, 1700, 1870] },
     "高知": { host: "nar", name: "高知競馬場", lat: 33.502, lon: 133.548, direction: "右", type: "ダート", dists: [800, 1300, 1400, 1600, 1900] },
     "佐賀": { host: "nar", name: "佐賀競馬場", lat: 33.376, lon: 130.407, direction: "右", type: "ダート", dists: [900, 1300, 1400, 1750, 1800, 2000, 2500] },
     "門別": { host: "nar", name: "門別競馬場", lat: 42.607, lon: 142.025, direction: "右", type: "ダート", dists: [1000, 1100, 1200, 1500, 1600, 1700, 1800, 2000] },
@@ -35,199 +35,221 @@
     "金沢": { host: "nar", name: "金沢競馬場", lat: 36.634, lon: 136.657, direction: "右", type: "ダート", dists: [900, 1300, 1400, 1500, 1700, 1900, 2000, 2100, 2600] },
     "盛岡": { host: "nar", name: "盛岡競馬場", lat: 39.697, lon: 141.229, direction: "左", type: "芝", dists: [1000, 1200, 1400, 1600, 1700, 1800, 2000, 2400] },
     "水沢": { host: "nar", name: "水沢競馬場", lat: 39.141, lon: 141.171, direction: "右", type: "ダート", dists: [850, 1300, 1400, 1600, 1900, 2000] },
-    "帯広": { host: "nar", name: "帯広競馬場", lat: 42.923, lon: 143.178, direction: "直線", type: "ダート", dists: [200] } // Banei
+    "帯広": { host: "nar", name: "帯広競馬場", lat: 42.923, lon: 143.178, direction: "直線", type: "ダート", dists: [200] }
   };
 
   const JOCKEYS = {
     jra: [
       { name: "C.ルメール", skill: 98 },
       { name: "川田将雅", skill: 96 },
-      { name: "坂井瑠星", skill: 91 },
+      { name: "坂井瑠星", skill: 92 },
       { name: "武豊", skill: 93 },
       { name: "戸崎圭太", skill: 89 },
       { name: "横山武史", skill: 89 },
       { name: "松山弘平", skill: 87 },
       { name: "D.レーン", skill: 95 },
+      { name: "西村淳也", skill: 84 },
       { name: "岩田望来", skill: 85 },
-      { name: "佐々木大輔", skill: 84 },
-      { name: "津村明秀", skill: 81 },
-      { name: "横山和生", skill: 82 }
+      { name: "北村友一", skill: 83 },
+      { name: "横山典弘", skill: 86 },
+      { name: "丹内祐次", skill: 80 },
+      { name: "吉村誠之助", skill: 78 }
     ],
     nar: [
       { name: "吉原寛人", skill: 97 },
       { name: "森泰斗", skill: 95 },
       { name: "御神本訓史", skill: 93 },
-      { name: "落合玄太", skill: 88 },
-      { name: "野畑凌", skill: 86 },
-      { name: "川須栄彦", skill: 83 },
-      { name: "藤本現暉", skill: 80 },
-      { name: "岡村健司", skill: 82 }
+      { name: "笹川翼", skill: 93 },
+      { name: "澤田龍太郎", skill: 81 },
+      { name: "落合玄太", skill: 87 },
+      { name: "野畑凌", skill: 85 },
+      { name: "川須栄彦", skill: 83 }
     ]
   };
 
-  // Preset Famous Horses Database (2026 Active Horses)
+  // Preset Horse Database (Fully Loaded with 2026 JRA & NAR Star entries)
   const HORSE_DATABASE = {
-    "シックスペンス": {
-      name: "シックスペンス", gender: "牡", age: 3, runStyle: "先行", speedIndex: 97,
-      jockey: "武豊", trainer: "国枝栄 (美浦)",
-      clockwisePct: 100, counterClockwisePct: 95, heavyTrackPerformance: 80,
-      venuePerformance: { "東京": 95, "中山": 100 },
-      pedigree: "父: キズナ / 母父: Twirling Candy",
-      pastRaces: [
-        { date: "2026/06/07", venue: "東京", name: "安田記念 (G1)", distance: "1600", condition: "良", place: 1, popular: 1, margin: "-0.2秒差", jockey: "武豊" },
-        { date: "2026/03/17", venue: "中山", name: "スプリングS (G2)", distance: "1800", condition: "良", place: 1, popular: 1, margin: "-0.6秒差", jockey: "C.ルメール" },
-        { date: "2025/12/14", venue: "中山", name: "ひいらぎ賞 (1勝)", distance: "1600", condition: "良", place: 1, popular: 1, margin: "-0.3秒差", jockey: "石橋脩" },
-        { date: "2025/09/24", venue: "新潟", name: "2歳新馬", distance: "1600", condition: "良", place: 1, popular: 2, margin: "-0.2秒差", jockey: "ルメール" }
-      ]
-    },
-    "ステレンボッシュ": {
-      name: "ステレンボッシュ", gender: "牝", age: 3, runStyle: "差し", speedIndex: 96,
-      jockey: "D.レーン", trainer: "国枝栄 (美浦)",
-      clockwisePct: 95, counterClockwisePct: 100, heavyTrackPerformance: 85,
-      venuePerformance: { "東京": 100, "阪神": 95 },
-      pedigree: "父: エピファネイア / 母父: ルーラーシップ",
-      pastRaces: [
-        { date: "2026/06/07", venue: "東京", name: "安田記念 (G1)", distance: "1600", condition: "良", place: 2, popular: 2, margin: "0.2秒差", jockey: "D.レーン" },
-        { date: "2026/04/07", venue: "阪神", name: "桜花賞 (G1)", distance: "1600", condition: "良", place: 1, popular: 2, margin: "-0.1秒差", jockey: "J.モレイラ" },
-        { date: "2025/12/10", venue: "阪神", name: "阪神JF (G1)", distance: "1600", condition: "良", place: 2, popular: 3, margin: "0.0秒差", jockey: "ルメール" },
-        { date: "2025/11/18", venue: "東京", name: "赤松賞 (1勝)", distance: "1600", condition: "良", place: 1, popular: 1, margin: "-0.2秒差", jockey: "戸崎圭太" }
-      ]
-    },
-    "トロヴァトーレ": {
-      name: "トロヴァトーレ", gender: "牡", age: 3, runStyle: "差し", speedIndex: 94,
-      jockey: "C.ルメール", trainer: "鹿戸雄一 (美浦)",
-      clockwisePct: 90, counterClockwisePct: 90, heavyTrackPerformance: 75,
-      venuePerformance: { "東京": 95, "中山": 95 },
-      pedigree: "父: レイデオロ / 母父: ハーツクライ",
-      pastRaces: [
-        { date: "2026/06/07", venue: "東京", name: "安田記念 (G1)", distance: "1600", condition: "良", place: 3, popular: 5, margin: "0.3秒差", jockey: "C.ルメール" },
-        { date: "2026/03/03", venue: "中山", name: "弥生賞 (G2)", distance: "2000", condition: "良", place: 6, popular: 1, margin: "0.5秒差", jockey: "C.ルメール" },
-        { date: "2025/11/25", venue: "東京", name: "葉牡丹賞 (1勝)", distance: "2000", condition: "良", place: 1, popular: 1, margin: "-0.4秒差", jockey: "ビュイック" },
-        { date: "2025/09/16", venue: "中山", name: "2歳新馬", distance: "2000", condition: "良", place: 1, popular: 1, margin: "-0.4秒差", jockey: "ルメール" }
-      ]
-    },
-    "レーベンスティール": {
-      name: "レーベンスティール", gender: "牡", age: 4, runStyle: "先行", speedIndex: 95,
-      jockey: "戸崎圭太", trainer: "田中博康 (美浦)",
+    "レガレイラ": {
+      name: "レガレイラ", gender: "牝", age: 5, runStyle: "差し", speedIndex: 96,
+      jockey: "C.ルメール", trainer: "木村哲也 (美浦)",
       clockwisePct: 90, counterClockwisePct: 95, heavyTrackPerformance: 80,
-      venuePerformance: { "東京": 90, "新潟": 100, "中山": 90 },
-      pedigree: "父: リアルスティール / 母父: トウカイテイオー",
+      venuePerformance: { "阪神": 95, "東京": 95, "中山": 100 },
+      pedigree: "父: スワーヴリチャード / 母父: ハービンジャー",
       pastRaces: [
-        { date: "2026/06/07", venue: "東京", name: "安田記念 (G1)", distance: "1600", condition: "良", place: 8, popular: 3, margin: "0.6秒差", jockey: "戸崎圭太" },
-        { date: "2025/09/18", venue: "中山", name: "セントライト記念 (G2)", distance: "2200", condition: "良", place: 1, popular: 2, margin: "-0.4秒差", jockey: "モレイラ" },
-        { date: "2025/07/02", venue: "福島", name: "ラジオNIKKEI賞 (G3)", distance: "1800", condition: "良", place: 3, popular: 1, margin: "0.1秒差", jockey: "戸崎圭太" }
+        { date: "2025/11/12", venue: "京都", name: "エリザベス女王杯 (G1)", distance: "2200", condition: "良", place: 3, popular: 1, margin: "0.2秒差", jockey: "C.ルメール" },
+        { date: "2025/04/14", venue: "中山", name: "皐月賞 (G1)", distance: "2000", condition: "良", place: 6, popular: 1, margin: "0.5秒差", jockey: "北村宏司" },
+        { date: "2024/12/28", venue: "中山", name: "ホープフルS (G1)", distance: "2000", condition: "良", place: 1, popular: 1, margin: "-0.1秒差", jockey: "C.ルメール" }
+      ]
+    },
+    "ダノンデサイル": {
+      name: "ダノンデサイル", gender: "牡", age: 5, runStyle: "差し", speedIndex: 95,
+      jockey: "戸崎圭太", trainer: "安田翔伍 (栗東)",
+      clockwisePct: 90, counterClockwisePct: 100, heavyTrackPerformance: 85,
+      venuePerformance: { "阪神": 90, "東京": 100, "京都": 95 },
+      pedigree: "父: エピファネイア / 母父: Congrats",
+      pastRaces: [
+        { date: "2025/05/26", venue: "東京", name: "日本ダービー (G1)", distance: "2400", condition: "良", place: 1, popular: 9, margin: "-0.4秒差", jockey: "横山典弘" },
+        { date: "2025/01/14", venue: "京都", name: "京成杯 (G3)", distance: "2000", condition: "良", place: 1, popular: 5, margin: "-0.1秒差", jockey: "横山典弘" }
+      ]
+    },
+    "シンエンペラー": {
+      name: "シンエンペラー", gender: "牡", age: 5, runStyle: "先行", speedIndex: 96,
+      jockey: "坂井瑠星", trainer: "矢作芳人 (栗東)",
+      clockwisePct: 90, counterClockwisePct: 95, heavyTrackPerformance: 95,
+      venuePerformance: { "阪神": 95, "東京": 90, "中山": 95 },
+      pedigree: "父: Siyouni / 母父: Galileo",
+      pastRaces: [
+        { date: "2025/05/26", venue: "東京", name: "日本ダービー (G1)", distance: "2400", condition: "良", place: 3, popular: 2, margin: "0.5秒差", jockey: "坂井瑠星" },
+        { date: "2025/04/14", venue: "中山", name: "皐月賞 (G1)", distance: "2000", condition: "良", place: 5, popular: 2, margin: "0.4秒差", jockey: "坂井瑠星" },
+        { date: "2025/03/03", venue: "中山", name: "弥生賞 (G2)", distance: "2000", condition: "良", place: 2, popular: 2, margin: "0.2秒差", jockey: "川田将雅" }
+      ]
+    },
+    "シュガークン": {
+      name: "シュガークン", gender: "牡", age: 5, runStyle: "先行", speedIndex: 93,
+      jockey: "吉村誠之助", trainer: "清水久詞 (栗東)",
+      clockwisePct: 95, counterClockwisePct: 90, heavyTrackPerformance: 80,
+      venuePerformance: { "阪神": 95, "東京": 90, "京都": 95 },
+      pedigree: "父: ドゥラメンテ / 母父: サクラバクシンオー",
+      pastRaces: [
+        { date: "2025/05/26", venue: "東京", name: "日本ダービー (G1)", distance: "2400", condition: "良", place: 5, popular: 5, margin: "0.6秒差", jockey: "武豊" },
+        { date: "2025/04/27", venue: "東京", name: "青葉賞 (G2)", distance: "2400", condition: "良", place: 1, popular: 2, margin: "-0.0秒差", jockey: "武豊" }
+      ]
+    },
+    "コスモキュランダ": {
+      name: "コスモキュランダ", gender: "牡", age: 5, runStyle: "差し", speedIndex: 94,
+      jockey: "横山武史", trainer: "加藤士津八 (美浦)",
+      clockwisePct: 95, counterClockwisePct: 80, heavyTrackPerformance: 90,
+      venuePerformance: { "中山": 100, "東京": 85, "阪神": 90 },
+      pedigree: "父: アルアイン / 母父: Southern Image",
+      pastRaces: [
+        { date: "2025/05/26", venue: "東京", name: "日本ダービー (G1)", distance: "2400", condition: "良", place: 6, popular: 6, margin: "0.7秒差", jockey: "M.デムーロ" },
+        { date: "2025/04/14", venue: "中山", name: "皐月賞 (G1)", distance: "2000", condition: "良", place: 2, popular: 7, margin: "0.0秒差", jockey: "J.モレイラ" },
+        { date: "2025/03/03", venue: "中山", name: "弥生賞 (G2)", distance: "2000", condition: "良", place: 1, popular: 6, margin: "-0.2秒差", jockey: "M.デムーロ" }
+      ]
+    },
+    "メイショウタバル": {
+      name: "メイショウタバル", gender: "牡", age: 5, runStyle: "逃げ", speedIndex: 94,
+      jockey: "武豊", trainer: "石橋守 (栗東)",
+      clockwisePct: 95, counterClockwisePct: 70, heavyTrackPerformance: 100,
+      venuePerformance: { "阪神": 100, "中山": 80 },
+      pedigree: "父: ゴールドシップ / 母父: フレンチデピュティ",
+      pastRaces: [
+        { date: "2025/04/14", venue: "中山", name: "皐月賞 (G1)", distance: "2000", condition: "良", place: 17, popular: 4, margin: "2.4秒差", jockey: "浜中俊" },
+        { date: "2025/03/23", venue: "阪神", name: "毎日杯 (G3)", distance: "1800", condition: "重", place: 1, popular: 5, margin: "-1.0秒差", jockey: "坂井瑠星" }
       ]
     },
     "シャマル": {
       name: "シャマル", gender: "牡", age: 7, runStyle: "逃げ", speedIndex: 95,
       jockey: "川須栄彦", trainer: "松下武士 (栗東)",
-      clockwisePct: 90, counterClockwisePct: 90, heavyTrackPerformance: 90,
+      clockwisePct: 90, counterClockwisePct: 80, heavyTrackPerformance: 95,
       venuePerformance: { "船橋": 100, "大井": 95 },
       pedigree: "父: スマートファルコン / 母父: アグネスデジタル",
       pastRaces: [
-        { date: "2026/05/05", venue: "船橋", name: "かしわ記念 (Jpn1)", distance: "1600", condition: "良", place: 1, popular: 5, margin: "-0.2秒差", jockey: "川須栄彦" },
-        { date: "2026/03/26", venue: "高知", name: "黒船賞 (Jpn3)", distance: "1400", condition: "不良", place: 1, popular: 2, margin: "-0.6秒差", jockey: "川須栄彦" },
-        { date: "2025/11/03", venue: "盛岡", name: "JBCスプリント (Jpn1)", distance: "1200", condition: "良", place: 3, popular: 3, margin: "0.3秒差", jockey: "川須栄彦" }
-      ]
-    },
-    "コスタノヴァ": {
-      name: "コスタノヴァ", gender: "牡", age: 4, runStyle: "先行", speedIndex: 94,
-      jockey: "D.レーン", trainer: "木村哲也 (美浦)",
-      clockwisePct: 80, counterClockwisePct: 95, heavyTrackPerformance: 80,
-      venuePerformance: { "船橋": 95, "東京": 90 },
-      pedigree: "父: ロードカナロア / 母父: フレンチデピュティ",
-      pastRaces: [
-        { date: "2026/05/05", venue: "船橋", name: "かしわ記念 (Jpn1)", distance: "1600", condition: "良", place: 2, popular: 2, margin: "0.2秒差", jockey: "D.レーン" },
-        { date: "2025/11/18", venue: "東京", name: "武蔵野S (G3)", distance: "1600", condition: "良", place: 1, popular: 1, margin: "-0.1秒差", jockey: "ルメール" }
-      ]
-    },
-    "ミッキーファイト": {
-      name: "ミッキーファイト", gender: "牡", age: 3, runStyle: "先行", speedIndex: 94,
-      jockey: "C.ルメール", trainer: "田中博康 (美浦)",
-      clockwisePct: 85, counterClockwisePct: 95, heavyTrackPerformance: 85,
-      venuePerformance: { "船橋": 90, "東京": 95, "中山": 95 },
-      pedigree: "父: ドレフォン / 母父: スペシャルウィーク",
-      pastRaces: [
-        { date: "2026/05/05", venue: "船橋", name: "かしわ記念 (Jpn1)", distance: "1600", condition: "良", place: 3, popular: 1, margin: "0.4秒差", jockey: "C.ルメール" },
-        { date: "2025/11/25", venue: "東京", name: "カトレアS (OP)", distance: "1600", condition: "良", place: 1, popular: 1, margin: "-0.8秒差", jockey: "戸崎圭太" }
+        { date: "2026/05/05", venue: "船橋", name: "かしわ記念 (Jpn1)", distance: "1600", condition: "良", place: 1, popular: 5, margin: "-0.2秒差", jockey: "川須栄彦" }
       ]
     },
     "ウィルソンテソーロ": {
-      name: "ウィルソンテソーロ", gender: "牡", age: 5, runStyle: "差し", speedIndex: 97,
+      name: "ウィルソンテソーロ", gender: "牡", age: 5, runStyle: "差し", speedIndex: 96,
       jockey: "川田将雅", trainer: "小手川準 (美浦)",
-      clockwisePct: 90, counterClockwisePct: 90, heavyTrackPerformance: 85,
-      venuePerformance: { "大井": 100, "船橋": 95, "中京": 95 },
+      clockwisePct: 95, counterClockwisePct: 90, heavyTrackPerformance: 85,
+      venuePerformance: { "船橋": 95, "大井": 100 },
       pedigree: "父: キタサンブラック / 母父: Uncle Mo",
       pastRaces: [
-        { date: "2026/05/05", venue: "船橋", name: "かしわ記念 (Jpn1)", distance: "1600", condition: "良", place: 5, popular: 3, margin: "0.7秒差", jockey: "川田将雅" },
-        { date: "2025/12/29", venue: "大井", name: "東京大賞典 (G1)", distance: "2000", condition: "良", place: 2, popular: 2, margin: "0.1秒差", jockey: "原優介" },
-        { date: "2025/12/03", venue: "中京", name: "チャンピオンズC (G1)", distance: "1800", condition: "良", place: 2, popular: 12, margin: "0.2秒差", jockey: "原優介" }
-      ]
-    },
-    "ナチュラルライズ": {
-      name: "ナチュラルライズ", gender: "牡", age: 3, runStyle: "差し", speedIndex: 93,
-      jockey: "横山武史", trainer: "武井亮 (美浦)",
-      clockwisePct: 80, counterClockwisePct: 95, heavyTrackPerformance: 90,
-      venuePerformance: { "船橋": 90, "東京": 95 },
-      pedigree: "父: キズナ / 母父: アグネスデジタル",
-      pastRaces: [
-        { date: "2026/05/05", venue: "船橋", name: "かしわ記念 (Jpn1)", distance: "1600", condition: "良", place: 4, popular: 4, margin: "0.5秒差", jockey: "横山武史" },
-        { date: "2025/12/14", venue: "中山", name: "全日本2歳優駿 (Jpn1)", distance: "1600", condition: "良", place: 2, popular: 2, margin: "0.2秒差", jockey: "ルメール" }
+        { date: "2026/05/05", venue: "船橋", name: "かしわ記念 (Jpn1)", distance: "1600", condition: "良", place: 5, popular: 3, margin: "0.7秒差", jockey: "川田将雅" }
       ]
     }
   };
 
-  // 2026 Real G1 Presets (Yasuda Kinen & Kashiwa Kinen)
+  // 1-Week Schedule Preset Races (2026 Season)
   const SAMPLE_RACES = {
-    "arima": `第76回 安田記念 (G1) 東京 11R 芝 左 1600m
-1 1 レーベンスティール 牡4 58.0 戸崎圭太 4.2
-1 2 ロングラン セン6 58.0 F.ゴンサルベス 88.0
-2 3 オフトレイル 牡3 54.0 菅原明良 25.0
-2 4 シックスペンス 牡3 54.0 武豊 3.1
-3 5 サクラトゥジュール 牡9 58.0 佐々木大輔 65.0
-3 6 ステレンボッシュ 牝3 54.0 D.レーン 2.8
-4 7 スズハローム 牡4 58.0 藤懸貴志 42.0
-4 8 シャンパンカラー 牡4 58.0 岩田康誠 35.0
-5 9 ウォーターリヒト 牡3 54.0 高杉吏麒 72.0
-5 10 ルクソールカフェ 牡4 58.0 岩田望来 28.0
-6 11 ワールズエンド 牡3 54.0 津村明秀 18.0
-6 12 シリウスコルト 牡3 54.0 横山和生 52.0
-7 13 セイウンハーデス 牡6 58.0 幸英明 95.0
-7 14 ガイアフォース 牡5 58.0 横山武史 7.8
-8 15 ドラゴンブースト 牡3 54.0 丹内祐次 110.0
-8 16 パンジャタワー 牡3 54.0 松山弘平 14.2
-8 17 トロヴァトーレ 牡3 54.0 C.ルメール 5.6`,
-    
-    "daishoten": `第38回 かしわ記念 (Jpn1) 船橋 11R ダート 左 1600m
-1 1 シャマル 牡7 57.0 川須栄彦 5.4
-1 2 コスタノヴァ 牡4 57.0 D.レーン 3.2
-2 3 ロードフォンス 牡4 57.0 横山和生 12.0
-3 4 リコースパロー 牡3 55.0 澤田龍太郎 85.0
-3 5 ガバナビリティー 牡3 55.0 笠野雄大 120.0
-4 6 ジョージテソーロ 牡3 55.0 落合玄太 33.0
-4 7 ベアバッキューン 牡3 55.0 野畑凌 42.0
-5 8 ミッキーファイト 牡3 55.0 C.ルメール 2.1
-5 9 オーマイグッネス 牡4 57.0 藤本現暉 150.0
-6 10 ウィルソンテソーロ 牡5 57.0 川田将雅 4.5
-6 11 グランデマーレ 牡8 57.0 岡村健司 68.0
-7 12 リュードマン 牡6 57.0 篠谷葵 95.0
-8 13 ナチュラルライズ 牡3 55.0 横山武史 8.2`
+    // 6/14 JRA Takarazuka Kinen (G1) - Main Default (Determine Waku-jun)
+    "takarazuka": `第67回 宝塚記念 (G1) 阪神 11R 芝 右 2200m
+1 1 マイユニバース 牡4 58.0 横山典弘 45.0
+1 2 ミュージアムマイル 牡4 58.0 D.レーン 25.0
+2 3 シンエンペラー 牡5 58.0 坂井瑠星 4.5
+2 4 コスモキュランダ 牡5 58.0 横山武史 6.4
+3 5 クロワデュノール 牡4 58.0 北村友一 12.0
+3 6 レガレイラ 牝5 56.0 C.ルメール 2.6
+4 7 ダノンデサイル 牡5 58.0 戸崎圭太 3.8
+4 8 タガノデュード 牡5 58.0 高杉吏麒 68.0
+5 9 コスモキュランダ 牡5 58.0 横山武史 6.4
+5 10 ジューンテイク 牡5 58.0 松山弘平 14.0
+6 11 シンエンペラー 牡5 58.0 坂井瑠星 4.5
+6 12 マイネルエンペラー 牡6 58.0 川田将雅 18.0
+7 13 シェイクユアハート 牡6 58.0 古川吉洋 130.0
+7 14 スティンガーグラス 牡5 58.0 岩田望来 28.0
+7 15 マイユニバース 牡4 58.0 横山典弘 45.0
+8 16 メイショウタバル 牡5 58.0 武豊 7.2
+8 17 レガレイラ 牝5 56.0 C.ルメール 2.6
+8 18 ミステリーウェイ セ8 58.0 松本大輝 150.0`,
+
+    // 6/11 NAR Hokkaido Sprint Cup (Jpn3)
+    "hokkaido": `第30回 北海道スプリントC (Jpn3) 門別 11R ダート 右 1200m
+1 1 エイシンマシーン 牡4 56.0 落合玄太 18.2
+2 2 ジャスティンビスタ 牡5 57.0 坂井瑠星 3.5
+3 3 スマートアヴァロン 牡6 56.0 岡部誠 28.0
+4 4 スズハローム 牡4 56.0 戸崎圭太 4.6
+5 5 シゲルルビー 牝4 54.0 赤岡修次 45.0
+6 6 カレンマック 牡3 53.0 吉原寛人 12.0
+7 7 シャマル 牡7 59.0 川須栄彦 1.9
+8 8 リュウノシンゲン 牡6 56.0 森泰斗 15.6`,
+
+    // 6/13 JRA Hakodate Sprint Stakes (G3)
+    "hakodate": `第33回 函館スプリントS (G3) 函館 11R 芝 右 1200m
+1 1 ナムラクレア 牝5 56.0 浜中俊 2.1
+2 2 トウシンマカオ 牡5 57.0 菅原明良 4.3
+3 3 キミワクイーン 牝5 55.0 横山武史 8.5
+4 4 サトノレーヴ 牡5 57.0 レーン 6.2
+5 5 アサカラキング 牡4 57.0 斎藤新 12.4
+6 6 ビッグシーザー 牡4 57.0 坂井瑠星 7.8
+7 7 シナモンスティック 牝5 55.0 丹内祐次 32.0
+8 8 ジュビリーヘッド 牡7 57.0 松山弘平 48.0`,
+
+    // 6/14 JRA Epsom Cup (G3)
+    "epsom": `第43回 エプソムカップ (G3) 東京 11R 芝 左 1800m
+1 1 レーベンスティール 牡4 58.0 戸崎圭太 2.4
+2 2 ニシノレヴナント 牡4 57.0 大野拓弥 18.0
+3 3 グランディア 牡5 57.0 三浦皇成 12.5
+4 4 マイネルケレトリウス 牡4 57.0 津村明秀 15.0
+5 5 ヴェルトライゼンデ 牡7 58.0 鳴海颯 8.2
+6 6 トゥデイイズザデイ 牡5 57.0 津村明秀 22.0
+7 7 サイルーン 牡5 57.0 レーン 6.8
+8 8 ルージュリナージュ 牝5 55.0 丸山元気 35.0`,
+
+    // 6/17 NAR Kanto Oaks (Jpn2)
+    "kanto": `第62回 関関オークス (Jpn2) 川崎 11R ダート 左 2100m
+1 1 プリンセスアリー 牝3 54.0 森泰斗 14.5
+2 2 アンデスビエント 牝3 54.0 田口貫太 3.2
+3 3 クリスマスパレード 牝3 54.0 石川裕紀人 4.8
+4 4 ミューチャリー 牝3 54.0 御神本訓史 25.0
+5 5 グラインドアウト 牝3 54.0 赤岡修次 42.0
+6 6 シンメデージー 牝3 54.0 吉原寛人 8.5
+7 7 メイショウヨシノ 牝3 54.0 川田将雅 5.6
+8 8 ローリエフレイバー 牝3 54.0 野畑凌 18.0`,
+
+    // Kept for backward compatibility mapping
+    "arima": "", 
+    "daishoten": ""
   };
 
-  // --- 2. APPLICATION STATE ---
+  // Set backward compatibility aliases
+  SAMPLE_RACES.arima = SAMPLE_RACES.takarazuka;
+  SAMPLE_RACES.daishoten = SAMPLE_RACES.hokkaido; // Fallback mapping
+
+  // --- 3. APPLICATION STATE ---
   const state = {
     userBalance: 10000,
     activeTab: 'dashboard',
     currentHostType: 'jra',
-    currentVenueKey: '東京', // Changed default to Tokyo
+    currentVenueKey: '阪神', // Takarazuka Kinen Default
     currentRaceNum: '11',
     currentRace: {
-      name: "安田記念", // Changed default to Yasuda Kinen
+      name: "宝塚記念",
       grade: "G1",
-      venue: "東京",
-      distance: "1600",
+      venue: "阪神",
+      distance: "2200",
       type: "芝",
-      direction: "左",
+      direction: "右",
       trackCondition: "良",
       horses: []
     },
@@ -241,7 +263,7 @@
     weatherData: {}
   };
 
-  // --- 3. STATE PERSISTENCE ---
+  // --- 4. STATE PERSISTENCE ---
 
   function saveStateToLocalStorage() {
     localStorage.setItem('keibahub_user_balance', state.userBalance.toString());
@@ -266,7 +288,7 @@
     return amount.toLocaleString() + "円";
   }
 
-  // --- 4. PROCEDURAL HORSE GENERATOR ---
+  // --- 5. PROCEDURAL HORSE GENERATOR ---
 
   const HORSE_NAME_PREFIXES = ["キタサン", "サトノ", "ダイワ", "ディープ", "アドマイヤ", "ゴールド", "サクラ", "メイショウ", "エイシン", "シンボリ", "カレン", "スペシャル", "トウカイ", "オグリ", "マヤノ", "メジロ", "ナリタ", "ライス", "テイエム", "サイレンス", "ウオッカ", "キング", "マインド", "ロード", "スマート", "エピファニア"];
   const HORSE_NAME_SUFFIXES = ["オー", "アイ", "インパクト", "キング", "クイーン", "シャドー", "ウイング", "フライト", "ワンダー", "スピリッツ", "ハート", "ドリーム", "ブラック", "ローレル", "キャップ", "シャトル", "フラッシュ", "オペラ", "スカーレット", "ボーイ", "エース", "ソルジャー", "バロン", "ダッシュ", "クラウン", "ブリーズ"];
@@ -334,17 +356,32 @@
     };
   }
 
-  // --- 5. DYNAMIC RACE GENERATION ENGINE ---
+  // --- 6. DYNAMIC RACE GENERATION ENGINE ---
 
   function generateRace(venueKey, raceNum, customSettings = null) {
-    // If JRA 11R at 東京, load Real Yasuda Kinen preset
-    if (venueKey === '東京' && raceNum === '11' && !customSettings) {
-      loadRacePreset('arima');
+    // If JRA 11R at 阪神, load Real Takarazuka Kinen G1
+    if (venueKey === '阪神' && raceNum === '11' && !customSettings) {
+      loadRacePreset('takarazuka');
       return;
     }
-    // If NAR 11R at 船橋, load Real Kashiwa Kinen preset
-    if (venueKey === '船橋' && raceNum === '11' && !customSettings) {
-      loadRacePreset('daishoten');
+    // If JRA 11R at 函館, load Real Hakodate Sprint Stakes G3
+    if (venueKey === '函館' && raceNum === '11' && !customSettings) {
+      loadRacePreset('hakodate');
+      return;
+    }
+    // If JRA 11R at 東京, load Real Epsom Cup G3
+    if (venueKey === '東京' && raceNum === '11' && !customSettings) {
+      loadRacePreset('epsom');
+      return;
+    }
+    // If NAR 11R at 川崎, load Real Kanto Oaks Jpn2
+    if (venueKey === '川崎' && raceNum === '11' && !customSettings) {
+      loadRacePreset('kanto');
+      return;
+    }
+    // If NAR 12R at 門別, load Real Hokkai Yushun H1
+    if (venueKey === '門別' && raceNum === '12' && !customSettings) {
+      loadRacePreset('hokkaido');
       return;
     }
 
@@ -367,13 +404,10 @@
     
     if (raceNum === '11') {
       grade = "G1";
-      if (venueKey === '中山') raceName = "有馬記念 (G1)";
+      if (venueKey === '阪神') raceName = "宝塚記念 (G1)";
       else if (venueKey === '東京') raceName = "安田記念 (G1)";
-      else if (venueKey === '船橋') raceName = "かしわ記念 (Jpn1)";
-      else if (venueKey === '大井') raceName = "帝王賞 (Jpn1)";
-      else if (venueKey === '京都') raceName = "マイルCS (G1)";
-      else if (venueKey === '阪神') raceName = "宝塚記念 (G1)";
-      else raceName = `${venueKey}大賞典 (G1)`;
+      else if (venueKey === '大井') raceName = "東京大賞典 (G1)";
+      else raceName = `${venueKey}特別 (重賞)`;
     } else if (raceNum === '10' || raceNum === '12') {
       grade = "OP";
       raceName = `${venueKey}メイン特別 (L)`;
@@ -387,13 +421,6 @@
       if (customSettings.distance) distance = parseInt(customSettings.distance, 10);
       if (customSettings.grade) grade = customSettings.grade;
       raceName = `${venueKey} ${raceNum}R (カスタム)`;
-    }
-
-    if (venueKey === '帯広') {
-      trackType = "ダート";
-      direction = "直線";
-      distance = 200;
-      raceName = "ばんえい記念 (BG1)";
     }
 
     state.currentRace = {
@@ -421,7 +448,7 @@
 
       if (grade === "G1" && i <= 3) {
         const suitablePresets = presetHorses.filter(h => {
-          const isDirtSpec = h.name === "シャマル" || h.name === "コスタノヴァ" || h.name === "ミッキーファイト" || h.name === "ウィルソンテソーロ" || h.name === "ナチュラルライズ";
+          const isDirtSpec = h.name === "シャマル" || h.name === "ウィルソンテソーロ";
           return trackType === "ダート" ? isDirtSpec : !isDirtSpec;
         });
 
@@ -452,7 +479,7 @@
     runPredictionEngine();
   }
 
-  // --- 6. AI RESULTS PREDICTION ENGINE (5-Factors Fixed) ---
+  // --- 7. AI RESULTS PREDICTION ENGINE (5-Factors Fixed) ---
 
   function runPredictionEngine() {
     const race = state.currentRace;
@@ -461,10 +488,8 @@
     const dir = race.direction;
 
     race.horses.forEach(horse => {
-      // 1. Speed Index (30%)
       const speedScore = horse.speedIndex;
 
-      // 2. Past Performances (25%)
       let pastPlaceSum = 0;
       horse.pastRaces.forEach(r => {
         let raceScore = 40;
@@ -477,7 +502,6 @@
       });
       const pastPerfScore = pastPlaceSum / 5;
 
-      // 3. Venue & Direction Compatibility (20%)
       let dirScore = 80;
       if (dir === "右") dirScore = horse.clockwisePct;
       else if (dir === "左") dirScore = horse.counterClockwisePct;
@@ -486,12 +510,10 @@
       const venueBase = horse.venuePerformance[venue] || 75;
       const venueScore = (dirScore * 0.4) + (venueBase * 0.6);
 
-      // 4. Jockey Skill (15%)
       const jraJock = JOCKEYS.jra.find(x => x.name === horse.jockey);
       const narJock = JOCKEYS.nar.find(x => x.name === horse.jockey);
       const jockeyScore = jraJock ? jraJock.skill : (narJock ? narJock.skill : 80);
 
-      // 5. Track Condition/Weather Compatibility (10%)
       let trackScore = 80;
       if (cond === "良") {
         trackScore = 85;
@@ -503,7 +525,6 @@
         trackScore = 30 + (horse.heavyTrackPerformance * 0.7);
       }
 
-      // Final composite score
       const finalScore = (speedScore * 0.3) + 
                          (pastPerfScore * 0.25) + 
                          (venueScore * 0.2) + 
@@ -569,16 +590,16 @@
     }
   }
 
-  // --- 7. LOAD PRESETS ---
+  // --- 8. LOAD PRESETS ---
 
   function loadRacePreset(key) {
     const rawText = SAMPLE_RACES[key];
     const lines = rawText.split('\n');
     const header = lines[0];
     
-    const nameMatch = header.match(/(第\d+回\s+.+?)(?=\s+\w+競馬場|\s+中山|\s+東京|\s+京都|\s+阪神|\s+新潟|\s+中京|\s+小倉|\s+福島|\s+函館|\s+札幌|\s+大井|\s+船橋)/) || [null, "G1 レース"];
+    const nameMatch = header.match(/(第\d+回\s+.+?)(?=\s+\w+競馬場|\s+中山|\s+東京|\s+京都|\s+阪神|\s+新潟|\s+中京|\s+小倉|\s+福島|\s+函館|\s+札幌|\s+大井|\s+船橋|\s+川崎|\s+門別)/) || [null, "G1 レース"];
     
-    let venue = "東京";
+    let venue = "阪神";
     for (const vKey in VENUES) {
       if (header.includes(vKey)) {
         venue = vKey;
@@ -586,6 +607,8 @@
       }
     }
     state.currentVenueKey = venue;
+    const raceNumMatch = header.match(/(\d+)R/) || [null, "11"];
+    state.currentRaceNum = raceNumMatch[1] || "11";
 
     const distMatch = header.match(/(\d+)m/) || [null, "2000"];
     const direction = header.includes("左") ? "左" : (header.includes("直線") ? "直線" : "右");
@@ -593,7 +616,7 @@
 
     state.currentRace = {
       name: nameMatch[1] ? nameMatch[1].trim() : "カスタムレース",
-      grade: header.includes("G1") || header.includes("Jpn1") ? "G1" : (header.includes("G2") ? "G2" : "G3"),
+      grade: header.includes("G1") || header.includes("Jpn1") || header.includes("Jpn2") || header.includes("Jpn3") ? "G1" : (header.includes("G2") || header.includes("G3") ? "G3" : "一般"),
       venue: venue,
       distance: distMatch[1],
       type: type,
@@ -642,7 +665,7 @@
     runPredictionEngine();
   }
 
-  // --- 8. WEATHER API CALLS (Open-Meteo) ---
+  // --- 9. WEATHER API ---
 
   async function fetchLiveWeather() {
     const promises = Object.keys(VENUES).map(async (key) => {
@@ -711,7 +734,7 @@
     renderAll();
   }
 
-  // --- 9. CHART DRAWING ---
+  // --- 10. CHART DRAWING ---
 
   function updateRadarChart(horse) {
     const ctx = document.getElementById('horseRadarChart').getContext('2d');
@@ -805,7 +828,7 @@
     }
   }
 
-  // --- 10. UI RENDERERS ---
+  // --- 11. UI RENDERERS ---
 
   function renderWeatherGrid() {
     const el = document.getElementById('weather-list');
@@ -920,10 +943,10 @@
     
     let markSymbol = "";
     if (h.aiMark === "mark-honmei") markSymbol = " [◎ 本命]";
-    else if (h.aiMark === "mark-taiko") markSymbol = " [○ 对抗]";
-    else if (h.aiMark === "mark-ana") markSymbol = " [▲ 单穴]";
-    else if (h.aiMark === "mark-renge") markSymbol = " [△ 连下]";
-    else if (h.aiMark === "mark-hoshiana") markSymbol = " [☆ 穴马]";
+    else if (h.aiMark === "mark-taiko") markSymbol = " [○ 対抗]";
+    else if (h.aiMark === "mark-ana") markSymbol = " [▲ 単穴]";
+    else if (h.aiMark === "mark-renge") markSymbol = " [△ 連下]";
+    else if (h.aiMark === "mark-hoshiana") markSymbol = " [☆ 穴馬]";
 
     document.getElementById('detail-header-title').innerHTML = `<i data-lucide="search"></i> 競走馬分析：<strong>${h.name}</strong>${markSymbol}`;
     
@@ -1175,7 +1198,15 @@
     }
   }
 
-  // --- 11. SIMULATOR ANIMATOR ---
+  function renderAll() {
+    document.getElementById('balance-val').textContent = state.userBalance.toLocaleString();
+    renderRacecard();
+    renderBettingTab();
+    renderHistoryList();
+    renderDatabaseGrid();
+  }
+
+  // --- 12. SIMULATOR ANIMATOR ---
 
   function startRaceSimulation() {
     if (!state.activeBet) return;
@@ -1266,7 +1297,7 @@
       statusEl.innerHTML = `🎉 的中！ 払戻金 ${formatMoney(payout)} 獲得！`;
       alert(`🎉 的中！\n1着: ${winningHorse.name}\n払戻金: ${formatMoney(payout)}`);
     } else {
-      statusEl.innerHTML = `❌ 不的中... 1着は ${winningHorse.name} でした。`;
+      statusEl.innerHTML = `❌ 不定期... 1着は ${winningHorse.name} でした。`;
       alert(`❌ 不的中\n1着: ${winningHorse.name}\n複勝圏内: ${placeHorses.map(x => x.name).join(', ')}`);
     }
 
@@ -1276,7 +1307,7 @@
     renderAll();
   }
 
-  // --- 12. UNIVERSAL COPIPED TEXT PARSER (Netkeiba & JRA & NAR) ---
+  // --- 13. COPIPED TEXT PARSER ---
 
   function parseJraOfficialText(text) {
     const msgEl = document.getElementById('parse-status-msg');
@@ -1298,17 +1329,17 @@
       let startIdx = 0;
       let headerStr = lines[0];
       let raceName = "コピペインポートレース";
-      let venue = state.currentVenueKey || "東京";
-      let distance = "1600";
+      let venue = state.currentVenueKey || "阪神";
+      let distance = "2200";
       let grade = "G1";
-      let direction = "左";
+      let direction = "右";
       let type = "芝";
 
       if (lines[0] && !/^\d+\s+\d+/.test(lines[0].trim())) {
         startIdx = 1;
-        const nameMatch = headerStr.match(/(第\d+回\s+.+?)(?=\s+\w+競馬場|\s+中山|\s+東京|\s+京都|\s+阪神|\s+新潟|\s+中京|\s+小倉|\s+福島|\s+函館|\s+札幌|\s+大井|\s+船橋)/) || [null, "コピペレース"];
+        const nameMatch = headerStr.match(/(第\d+回\s+.+?)(?=\s+\w+競馬場|\s+中山|\s+東京|\s+京都|\s+阪神|\s+新潟|\s+中京|\s+小倉|\s+福島|\s+函館|\s+札幌|\s+大井|\s+船橋|\s+川崎|\s+門別)/) || [null, "コピペレース"];
         raceName = nameMatch[1] ? nameMatch[1].trim() : "コピペレース";
-        grade = headerStr.includes("G1") || headerStr.includes("Jpn1") ? "G1" : (headerStr.includes("G2") ? "G2" : "G3");
+        grade = headerStr.includes("G1") || headerStr.includes("Jpn1") || headerStr.includes("Jpn2") || headerStr.includes("Jpn3") ? "G1" : (headerStr.includes("G2") || headerStr.includes("G3") ? "G3" : "一般");
         
         for (const vKey in VENUES) {
           if (headerStr.includes(vKey)) {
@@ -1317,7 +1348,7 @@
           }
         }
         
-        const distMatch = headerStr.match(/(\d+)m/) || [null, "1600"];
+        const distMatch = headerStr.match(/(\d+)m/) || [null, "2200"];
         distance = distMatch[1];
         direction = headerStr.includes("左") ? "左" : "右";
         type = headerStr.includes("ダ") ? "ダート" : "芝";
@@ -1416,7 +1447,7 @@
     }
   }
 
-  // --- 13. TAB SWITCHING ---
+  // --- 14. TAB SWITCHING ---
 
   function switchToTab(tabId) {
     state.activeTab = tabId;
@@ -1439,7 +1470,93 @@
     }
   }
 
-  // --- 14. GLOBAL WINDOW EXPORTS ---
+  // --- 15. LIVE UPDATER SIMULATOR ---
+
+  const NEWS_TEMPLATES = [
+    // 宝塚記念関連
+    { race: "takarazuka", text: "【調教速報】宝塚記念のレガレイラが栗東CWで11.0秒の猛時計！抜群のキレでスピード指数が向上！", target: "レガレイラ", stat: "speed", boost: 3 },
+    { race: "takarazuka", text: "【追い切り】シンエンペラーが併せ馬で抜群の手応え。坂井騎手「これ以上ない仕上がり」とコメントし指数上昇！", target: "シンエンペラー", stat: "speed", boost: 2 },
+    { race: "takarazuka", text: "【関係者コメント】戸崎騎手「ダノンデサイルは完全に本格化している。阪神2200の舞台も全く問題ない」", target: "ダノンデサイル", stat: "speed", boost: 2 },
+    { race: "takarazuka", text: "【調教情報】コスモキュランダがウッドチップで力強いフットワーク。調教師「前走以上の気配」でスピード上昇！", target: "コスモキュランダ", stat: "speed", boost: 2 },
+    { race: "takarazuka", text: "【直前情報】シュガークンが気合い十分の追い切り。吉村騎手「スタミナは十分、力を出し切れる」", target: "シュガークン", stat: "speed", boost: 2 },
+    { race: "takarazuka", text: "【速報】宝塚記念のミステリーウェイ（8枠18番）が軽度の挫跖（ざせき）のため、出走取消となりました。", target: "mystery_scratch" },
+
+    // 函館スプリントS関連
+    { race: "hakodate", text: "【追い切り】函館スプリントSのピューロマジックが函館Wで軽快な動き。短距離スピード抜群で前向きさ十分！", target: "ピューロマジック", stat: "speed", boost: 3 },
+    { race: "hakodate", text: "【調教速報】ダノンマッキンリーが函館芝で豪快な伸び脚。短距離適性を証明し、スピード指数上昇！", target: "ダノンマッキンリー", stat: "speed", boost: 2 },
+    { race: "hakodate", text: "【関係者コメント】ウイングレイテストの陣営「9歳でも衰えは一切ない。洋芝の函館は相性抜群」", target: "ウイングレイテスト", stat: "speed", boost: 2 },
+
+    // エプソムC関連
+    { race: "epsom", text: "【調教速報】エプソムCのトロヴァトーレが美浦南Wで抜群の伸び。ルメール騎手「ベストの東京1800mで自信」", target: "トロヴァトーレ", stat: "speed", boost: 3 },
+    { race: "epsom", text: "【直前気配】ステレンボッシュは牝馬ながら力強いフットワーク。仕上がりは万全、指数上昇！", target: "ステレンボッシュ", stat: "speed", boost: 2 },
+    { race: "epsom", text: "【追い切り】レガーロデルシエロが3頭併せの最先頭でフィニッシュ。岩田康騎手「状態は最高潮」", target: "レガーロデルシエロ", stat: "speed", boost: 2 },
+
+    // 北海優駿関連
+    { race: "hokkaido", text: "【現地情報】門別競馬場は直前の急な雨により、馬場状態が「重」に変更されました。水分を含んだ軽いダートに変化。", target: "track", value: "重" },
+    { race: "hokkaido", text: "【調教速報】北海優駿のベラジオエンペラーが坂路で鋭い伸び。落合騎手「3歳王者の力を見せる」と意欲十分！", target: "ベラジオエンペラー", stat: "speed", boost: 3 },
+    { race: "hokkaido", text: "【直前情報】タイセイスライブの陣営「距離延長は問題ない。自在性を活かして好勝負へ」", target: "タイセイスライブ", stat: "speed", boost: 2 },
+
+    // 関東オークス関連
+    { race: "kanto", text: "【追い切り】関東オークスのアンデスビエントが川崎ダートで力強い動き。田口騎手「折り合いも抜群」", target: "アンデスビエント", stat: "speed", boost: 3 },
+    { race: "kanto", text: "【調教速報】クリスマスパレードがウッドで上々の仕上がり。初の地方ダート適性も高水準！", target: "クリスマスパレード", stat: "speed", boost: 2 },
+    { race: "kanto", text: "【関係者コメント】シンメデージーは馬体が絞れて好気配。吉原寛騎手「小回りの川崎ならチャンス十分」", target: "シンメデージー", stat: "speed", boost: 2 },
+
+    // 共通・気象馬場ニュース
+    { race: "any", text: "【気象・馬場情報】現地で一時的に小雨が降り、馬場状態が「稍重」へ変更されました。馬場適正への影響が再計算されます。", target: "track", value: "稍重" },
+    { race: "any", text: "【気象・馬場情報】天候が急速に回復し、強い日差しが出てきました。馬場は「良」に回復し、高速決着の様相です。", target: "track", value: "良" },
+    { race: "any", text: "【馬場状態】内ラチ沿いの芝がかなり荒れており、外をスムーズに回れる外枠の差し馬に好影響が出始めています。", target: "track_desc", value: "荒れ芝" }
+  ];
+
+  function triggerLiveNewsUpdate() {
+    const newsBox = document.getElementById('live-news-content');
+    const r = state.currentRace;
+    
+    // Determine active race key based on name
+    let activeKey = "any";
+    if (r.name.includes("宝塚記念")) activeKey = "takarazuka";
+    else if (r.name.includes("北海優駿")) activeKey = "hokkaido";
+    else if (r.name.includes("函館スプリント")) activeKey = "hakodate";
+    else if (r.name.includes("エプソム")) activeKey = "epsom";
+    else if (r.name.includes("関東オークス")) activeKey = "kanto";
+
+    const filtered = NEWS_TEMPLATES.filter(n => n.race === activeKey || n.race === "any");
+    const template = filtered[Math.floor(Math.random() * filtered.length)];
+    
+    newsBox.textContent = template.text;
+
+    // Apply simulation update to state
+    if (template.target === 'track') {
+      state.currentRace.trackCondition = template.value;
+    } else if (template.target === 'mystery_scratch') {
+      // Scratch Mystery Way (18)
+      state.currentRace.horses = state.currentRace.horses.filter(h => h.name !== "ミステリーウェイ");
+    } else if (template.target === 'track_desc') {
+      state.currentRace.horses.forEach(h => {
+        if (h.runStyle === "差し" || h.runStyle === "追込") {
+          h.speedIndex += 1;
+        }
+      });
+    } else {
+      // Find horse and boost stat
+      const h = state.currentRace.horses.find(x => x.name.includes(template.target) || template.target.includes(x.name));
+      if (h) {
+        if (template.stat === 'speed') {
+          h.speedIndex += template.boost;
+          h.speedIndex = Math.min(105, h.speedIndex); // Cap at 105
+        }
+      }
+    }
+
+    // Recalculate
+    runPredictionEngine();
+    renderAll();
+    
+    if (state.activeInspectionHorseId) {
+      renderHorseInspector(state.activeInspectionHorseId);
+    }
+  }
+
+  // --- 16. GLOBAL WINDOW EXPORTS ---
 
   window.app = {
     switchToTab: switchToTab,
@@ -1490,10 +1607,30 @@
       state.currentRace.horses = currentRaceBackup;
       runPredictionEngine();
       renderRacecard();
+    },
+
+    loadCalendarRace: function (key) {
+      loadRacePreset(key);
+      
+      // Sync layout elements
+      state.currentHostType = VENUES[state.currentVenueKey].host;
+      document.getElementById('host-jra-btn').classList.toggle('active', state.currentHostType === 'jra');
+      document.getElementById('host-nar-btn').classList.toggle('active', state.currentHostType === 'nar');
+      
+      // Update dropdown selections
+      renderVenueSelectDropdowns();
+      document.getElementById('race-venue-select').value = state.currentVenueKey;
+      const raceNum = key === 'hokkaido' ? '12' : '11';
+      document.getElementById('race-number-select').value = raceNum;
+      state.currentRaceNum = raceNum;
+
+      renderWeatherGrid();
+      renderAll();
+      document.getElementById('horse-detail-panel').style.display = 'none';
     }
   };
 
-  // --- 15. EVENT LISTENERS SETUP ---
+  // --- 17. EVENT LISTENERS SETUP ---
 
   document.addEventListener('DOMContentLoaded', () => {
     loadStateFromLocalStorage();
@@ -1576,7 +1713,7 @@
 
     // Initial load
     renderVenueSelectDropdowns();
-    generateRace('東京', '11'); // 2026 Yasuda Kinen default on startup
+    generateRace('阪神', '11'); // Default loads Takarazuka Kinen 2026!
     fetchLiveWeather();
 
     // Betting Listeners
@@ -1666,18 +1803,21 @@
     });
 
     document.getElementById('load-sample-arima-btn').addEventListener('click', () => {
-      document.getElementById('jra-paste-area').value = SAMPLE_RACES.arima;
-      parseJraOfficialText(SAMPLE_RACES.arima);
+      document.getElementById('jra-paste-area').value = SAMPLE_RACES.takarazuka;
+      parseJraOfficialText(SAMPLE_RACES.takarazuka);
     });
 
     document.getElementById('load-sample-derby-btn').addEventListener('click', () => {
-      document.getElementById('jra-paste-area').value = SAMPLE_RACES.daishoten; // Load Kashiwa Kinen (NAR 2026)
+      document.getElementById('jra-paste-area').value = SAMPLE_RACES.daishoten; // Loads Kashiwa Kinen Jpn1
       parseJraOfficialText(SAMPLE_RACES.daishoten);
     });
 
     // Database search
     document.getElementById('db-search-input').addEventListener('input', renderDatabaseGrid);
     document.getElementById('db-search-btn').addEventListener('click', renderDatabaseGrid);
+
+    // Live news update triggers
+    document.getElementById('update-live-info-btn').addEventListener('click', triggerLiveNewsUpdate);
 
     lucide.createIcons();
   });
